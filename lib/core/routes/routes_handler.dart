@@ -1,6 +1,7 @@
 // Route generator 
 import 'package:flutter/material.dart';
 import 'package:project_restaurant/src/views/login/login_screen.dart';
+import 'package:project_restaurant/src/views/no_internet/no_internet_screen.dart';
 import 'package:project_restaurant/src/views/page_not_found/page_not_found_screen.dart';
 import 'package:project_restaurant/src/views/sign_up/sign_up_screen.dart';
 
@@ -9,6 +10,7 @@ class RouteHandler {
     switch(setting.name!){
       case SignUpScreen.route :  return MaterialPageRoute(builder: (context)=>const SignUpScreen());
       case LoginScreen.route :  return MaterialPageRoute(builder: (context)=>const LoginScreen());
+      case NoInternetScreen.route :  return MaterialPageRoute(builder: (context)=>const NoInternetScreen());
       default : return MaterialPageRoute(builder: (_)=>const PageNotFound()); 
     }
   }

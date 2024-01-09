@@ -10,6 +10,7 @@ const API_POST_LOGIN = '$API_BASE_URL/api/auth/login';
 //users
 const API_GET_USER_INDEX = '$API_BASE_URL/api/user'; 
 const API_GET_USER_SHOW = '$API_BASE_URL/api/user'; 
+const API_POST_USER_STORE = '$API_BASE_URL/api/user'; 
 /***** -END- URIs USER *****/
 
 

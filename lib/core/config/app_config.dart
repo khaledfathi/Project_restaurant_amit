@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../core_export.dart' as core;
+import '../core_export.dart';
 
 class AppConfig {
   //apply config
@@ -13,6 +14,7 @@ class AppConfig {
     await _initDB();
     await _initSharedPreference();
     await _initOrientationsProtraitUp();
+    _initConnection();
     _initDio();
   }
 
@@ -25,25 +27,25 @@ class AppConfig {
   //get device application apth 
   Future<void> _initAppPath() async {
     await getApplicationDocumentsDirectory()
-        .then((direcrory) => core.appDirPath = direcrory.path);
+        .then((direcrory) => Globals.appDirPath = direcrory.path);
       debugPrint('AppConfig : device path initilaizing  [OK]');
   }
   
   //database initilization
   Future<void> _initDB() async {
-        core.appDatabase = core.DatabaseSqlite();
+        Globals.appDatabase = DatabaseSqlite();
         debugPrint('AppConfig : Database sqlflite initilizing [OK]');
   }
 
   //init shared preference
   Future<void> _initSharedPreference() async {
-    core.sharedPreferences = await SharedPreferences.getInstance();
+    Globals.sharedPreferences = await SharedPreferences.getInstance();
     debugPrint('AppConfig : Shared Preferences initilaizing  [OK]');    
   }
 
   //init DIO
   void _initDio() {
-    core.api = Dio();
+    Globals.api = Dio();
     debugPrint('AppConfig : Dio (http communications) initilaizing  [OK]');
   }
 
@@ -53,6 +55,11 @@ class AppConfig {
       DeviceOrientation.portraitUp,
     ]);
     debugPrint('AppConfig : Device orientation set to Portrait up  [OK]');
+  }
+
+  void _initConnection(){
+    Globals.connection = InternetConnection(); 
+    debugPrint('AppConfig : InternetConnection Instansation [OK] ');
   }
 
 }

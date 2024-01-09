@@ -13,12 +13,14 @@ class SignUpScreenForm extends StatelessWidget {
   final TextEditingController? emailController;
   final TextEditingController? passwordController;
   final void Function()? onPressSignUp;
+  final Widget? signUpState ; 
   const SignUpScreenForm(
       {super.key,
       this.nameController,
       this.emailController,
       this.passwordController,
-      this.onPressSignUp});
+      this.onPressSignUp, 
+      this.signUpState});
 
   @override
   Widget build(BuildContext context) {
@@ -94,9 +96,13 @@ class SignUpScreenForm extends StatelessWidget {
               ),
               CustomStanderButton(
                 text: 'Sign Up',
-                margin: const EdgeInsets.only(top: 40),
+                margin: const EdgeInsets.only(top: 10),
                 onPressed: onPressSignUp,
               ),
+              Container(
+                padding: const EdgeInsets.all(15),
+                child: signUpState
+              )
             ],
           ),
         ));

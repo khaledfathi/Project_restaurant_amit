@@ -54,7 +54,7 @@ class Validation {
       _unique = true;
       return this; 
     }
-    await appDatabase
+    await Globals.appDatabase
         .table(table)
         .selectWhere('$column  = ?', [text]).then((queryResult) {
       _unique = queryResult.isEmpty;
