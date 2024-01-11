@@ -22,7 +22,7 @@ class App extends StatelessWidget {
   
   ///init route dpened on last login state 
   String _initRoute (){
-    if (Globals.sharedPreferences.getBool('isLogin')!){
+    if (Globals.sharedPreferences.getBool(IS_LOGIN)!){
       return MainScreen.route; 
     }
     return SignUpScreen.route; 

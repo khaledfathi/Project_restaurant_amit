@@ -33,10 +33,12 @@ class LoginCubit extends Cubit<LoginState> {
           UserModel user = UserModel(
             name: response.data['user']['name'], 
             email: email,
-            image : response.data['user']['image']
+            image : response.data['user']['image'],
+            token : response.data['token']
           );           
-          Globals.sharedPreferences.setString('currentUser', jsonEncode(response.data['user'])); 
-          Globals.sharedPreferences.setBool('isLogin', true); 
+          Globals.sharedPreferences.setString(CURRENT_USER, jsonEncode(response.data['user'])); 
+          Globals.sharedPreferences.setBool(IS_LOGIN, true); 
+          Globals.sharedPreferences.setString(API_TOKEN, response.data['token']); 
           Auth.setCurrentUser(user); 
           Navigator.of(context).pushNamedAndRemoveUntil(MainScreen.route , (route)=>false); 
           msg = 'Login Successfuly ';

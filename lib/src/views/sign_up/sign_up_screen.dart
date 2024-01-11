@@ -16,12 +16,13 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   //inputs controllers
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  //widgets
   final SignUpScreenAppBar _appBar = const SignUpScreenAppBar();
   //keys
-  GlobalKey<FormState> signUpFormKey = GlobalKey();
+  GlobalKey<FormState> _signUpFormKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -45,20 +46,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         listener: (context, state) {},
                         builder: (context, state) {
                           return Form(
-                            key: signUpFormKey,
+                            key: _signUpFormKey,
                             child: SignUpScreenForm(
-                              emailController: emailController,
-                              nameController: nameController,
-                              passwordController: passwordController,
+                              emailController: _emailController,
+                              nameController: _nameController,
+                              passwordController: _passwordController,
                               signUpState: _signUpState(state),
                               onPressSignUp: () {
-                                if (signUpFormKey.currentState!.validate()) {
+                                if (_signUpFormKey.currentState!.validate()) {
                                   FocusManager.instance.primaryFocus?.unfocus();
                                   SignUpCubit.get(context).signUp(
                                       context: context,
-                                      name: nameController.text,
-                                      email: emailController.text,
-                                      password: passwordController.text);
+                                      name: _nameController.text,
+                                      email: _emailController.text,
+                                      password: _passwordController.text);
                                 }
                               },
                             ),

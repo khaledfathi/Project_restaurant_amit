@@ -98,7 +98,7 @@ class SignUpScreenForm extends StatelessWidget {
               CustomLineButton(
                 label: 'Already have an account?',
                 onPressed: () =>
-                    Navigator.pushNamed(context, LoginScreen.route),
+                    Navigator.pushReplacementNamed(context, LoginScreen.route),
               ),
               /***** -END- Forget Button *****/ 
 
