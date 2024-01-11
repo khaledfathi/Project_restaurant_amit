@@ -24,23 +24,27 @@ class AppConfig {
     debugPrint('AppConfig : Flutter ensureInitialized [OK]');
   }
 
-  //get device application apth 
+  //get device application apth
   Future<void> _initAppPath() async {
     await getApplicationDocumentsDirectory()
         .then((direcrory) => Globals.appDirPath = direcrory.path);
-      debugPrint('AppConfig : device path initilaizing  [OK]');
+    debugPrint('AppConfig : device path initilaizing  [OK]');
   }
-  
+
   //database initilization
   Future<void> _initDB() async {
-        Globals.appDatabase = DatabaseSqlite();
-        debugPrint('AppConfig : Database sqlflite initilizing [OK]');
+    Globals.appDatabase = DatabaseSqlite();
+    debugPrint('AppConfig : Database sqlflite initilizing [OK]');
   }
 
   //init shared preference
   Future<void> _initSharedPreference() async {
     Globals.sharedPreferences = await SharedPreferences.getInstance();
-    debugPrint('AppConfig : Shared Preferences initilaizing  [OK]');    
+    debugPrint('AppConfig : Shared Preferences initilaizing  [OK]');
+    //prepeare login session
+    Globals.sharedPreferences.getBool('isLogin') == null
+        ? Globals.sharedPreferences.setBool('isLogin', false)
+        : null;
   }
 
   //init DIO
@@ -50,16 +54,15 @@ class AppConfig {
   }
 
   //set device orientations
-  Future<void> _initOrientationsProtraitUp ()async{
+  Future<void> _initOrientationsProtraitUp() async {
     await SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
     debugPrint('AppConfig : Device orientation set to Portrait up  [OK]');
   }
 
-  void _initConnection(){
-    Globals.connection = InternetConnection(); 
+  void _initConnection() {
+    Globals.connection = InternetConnection();
     debugPrint('AppConfig : InternetConnection Instansation [OK] ');
   }
-
 }

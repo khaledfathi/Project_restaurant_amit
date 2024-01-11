@@ -42,6 +42,7 @@ class SignUpScreenForm extends StatelessWidget {
             children: [
               
               //Name
+              /***** Name Input *****/
               BlocConsumer<NameValidationCubit, NameValidationState>(
                 listener: (context, state) {},
                 builder: (context, state) {
@@ -57,8 +58,9 @@ class SignUpScreenForm extends StatelessWidget {
                   );
                 },
               ),
+              /***** -END- Name Input *****/
 
-              //email
+              /***** Email Input *****/ 
               BlocConsumer<EmailValidationCubit, EmailValidationState>(
                 listener: (context, state) {},
                 builder: (context, state) {
@@ -72,8 +74,9 @@ class SignUpScreenForm extends StatelessWidget {
                   );
                 },
               ),
+              /***** -END- Email Input *****/ 
               
-              //password
+              /***** Password *****/ 
               BlocConsumer<PasswordVisibilityCubit, PasswordVisibilityState>(
                 listener: (context, state) {},
                 builder: (context, state) {
@@ -89,23 +92,35 @@ class SignUpScreenForm extends StatelessWidget {
                   );
                 },
               ),
+              /***** -END- Password Input *****/ 
+
+              /***** Forget Password Button *****/ 
               CustomLineButton(
                 label: 'Already have an account?',
                 onPressed: () =>
                     Navigator.pushNamed(context, LoginScreen.route),
               ),
+              /***** -END- Forget Button *****/ 
+
+
+              /***** SignUp Button*****/ 
               CustomStanderButton(
                 text: 'Sign Up',
                 margin: const EdgeInsets.only(top: 10),
                 onPressed: onPressSignUp,
               ),
+              /***** -END- SignUp Button*****/ 
+
+              /***** SignUp Status *****/ 
               Container(
                 padding: const EdgeInsets.all(15),
                 child: signUpState
               )
+              /***** -END- SignUp Status *****/ 
             ],
           ),
         ));
+
   }
   /***** input validation methods  *****/
   String? _nameValidation (String name){

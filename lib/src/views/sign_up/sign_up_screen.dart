@@ -6,6 +6,7 @@ import 'package:project_restaurant/src/views/sign_up/components/sign_up_screen_a
 import 'package:project_restaurant/src/views/sign_up/components/sign_up_screen_form.dart';
 
 class SignUpScreen extends StatefulWidget {
+  //route name
   static const String route = 'signup';
   const SignUpScreen({super.key});
 
@@ -28,64 +29,84 @@ class _SignUpScreenState extends State<SignUpScreen> {
       appBar: _appBar,
       body: BlocProvider(
           create: (context) => SignUpCubit(),
-          child: SingleChildScrollView(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height -
-                  _appBar.preferredSize.height -
-                  kToolbarHeight,
-              child: Column(
-                children: [
-                  //header
-                  const CustomHeaderText(title: 'Sign Up'),
-
-                  //form
-                  BlocConsumer<SignUpCubit, SignUpState>(
-                      listener: (context, state) {},
-                      builder: (context, state) {
-                        return Form(
-                          key: signUpFormKey,
-                          child: SignUpScreenForm(
-                            emailController: emailController,
-                            nameController: nameController,
-                            passwordController: passwordController,
-                            signUpState: _signUpState(state),
-                            onPressSignUp: () {
-                              if (signUpFormKey.currentState!.validate()) {
-                                SignUpCubit.get(context).signUp(
-                                    context : context,
-                                    name : nameController.text,
-                                    email : emailController.text,
-                                    password: passwordController.text);
-                              }
-                            },
+          child: GestureDetector(
+            onTap: ()=> FocusManager.instance.primaryFocus!.unfocus(), //dismiss keyboard 
+            child: SingleChildScrollView(
+              child: SizedBox(
+                height: _heightWithOutAppBar(context),
+                child: Column(
+                  children: [
+                    /****** Header ******/
+                    const CustomHeaderText(title: 'Sign Up'),
+                    /****** -END- Header ******/
+                    
+                    /****** Form ******/
+                    BlocConsumer<SignUpCubit, SignUpState>(
+                        listener: (context, state) {},
+                        builder: (context, state) {
+                          return Form(
+                            key: signUpFormKey,
+                            child: SignUpScreenForm(
+                              emailController: emailController,
+                              nameController: nameController,
+                              passwordController: passwordController,
+                              signUpState: _signUpState(state),
+                              onPressSignUp: () {
+                                if (signUpFormKey.currentState!.validate()) {
+                                  FocusManager.instance.primaryFocus?.unfocus();
+                                  SignUpCubit.get(context).signUp(
+                                      context: context,
+                                      name: nameController.text,
+                                      email: emailController.text,
+                                      password: passwordController.text);
+                                }
+                              },
+                            ),
+                          );
+                        }),
+                    /****** -END- Form ******/
+                    
+                    /****** Social Media Buttons Block ******/
+                    Expanded(
+                        child: Stack(
+                      children: [
+                        Positioned(
+                          bottom: 5,
+                          child: CustomSocialMediaBlock(
+                            onTapFacebook: () {},
+                            onTapGoogle: () {},
                           ),
-                        );
-                      }),
-                  //social media buttons
-                  Expanded(
-                      child: Stack(
-                    children: [
-                      Positioned(
-                        bottom: 5,
-                        child: CustomSocialMediaBlock(
-                          onTapFacebook: () {},
-                          onTapGoogle: () {},
-                        ),
-                      )
-                    ],
-                  ))
-                ],
+                        )
+                      ],
+                    )),
+                    /****** End Social Media Buttons Block ******/
+
+                  ],
+                ),
               ),
             ),
           )),
     );
   }
 
+  ///get screen height exclude appbar heigh and kToolbar hight
+  double _heightWithOutAppBar(BuildContext context) {
+    return MediaQuery.of(context).size.height -
+        _appBar.preferredSize.height -
+        kToolbarHeight;
+  }
+
+  /// indecator widget  to show status of sign up 
   Widget? _signUpState(SignUpState state) {
-    if (state is Loading) {
+    if (state is SignUpLoading) {
       return const CircularProgressIndicator();
-    } else if (state is Fail || state is NoInternet) {
-      return Text(SignUpCubit.msg , style: const TextStyle(color: Colors.red , fontSize: 15),);
+    } else if (state is SignUpFail || state is SignUpNoInternet) {
+      return FittedBox(
+        child: Text(
+          SignUpCubit.msg,
+          style: const TextStyle(color: Colors.red, fontSize: 15),
+        ),
+      );
     }
     return null;
   }
