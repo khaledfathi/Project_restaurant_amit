@@ -13,7 +13,7 @@ class AppConfig {
     await _initAppPath();
     await _initDB();
     await _initSharedPreference();
-    await _initOrientationsProtraitUp();
+    // await _initOrientationsProtraitUp();
     _initConnection();
     _initDio();
   }
@@ -42,8 +42,8 @@ class AppConfig {
     Globals.sharedPreferences = await SharedPreferences.getInstance();
     debugPrint('AppConfig : Shared Preferences initilaizing  [OK]');
     //prepeare login session
-    Globals.sharedPreferences.getBool('isLogin') == null
-        ? Globals.sharedPreferences.setBool('isLogin', false)
+    Globals.sharedPreferences.getBool(IS_LOGIN) == null
+        ? Globals.sharedPreferences.setBool(IS_LOGIN, false)
         : null;
   }
 

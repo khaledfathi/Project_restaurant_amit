@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:project_restaurant/core/core_export.dart';
 import 'package:project_restaurant/src/models/user_model.dart';
 import 'package:project_restaurant/src/views/login/login_screen.dart';
-import 'package:project_restaurant/src/views/sign_up/sign_up_screen.dart';
 
 class Auth {
   static UserModel? currentUser ; 

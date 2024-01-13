@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_restaurant/core/core_export.dart';
-import 'package:project_restaurant/src/controllers/signup/cubit/UI/email_validation/email_validation_cubit.dart';
-import 'package:project_restaurant/src/controllers/signup/cubit/UI/name_validation/name_validation_cubit.dart';
-import 'package:project_restaurant/src/controllers/signup/cubit/UI/password_visibility/password_visibility_cubit.dart';
+import 'package:project_restaurant/src/controllers/signup/cubit/UI/sign_up_email_validation/sign_up_email_validation_cubit.dart';
+import 'package:project_restaurant/src/controllers/signup/cubit/UI/sign_up_name_validation/sign_up_name_validation_cubit.dart';
+import 'package:project_restaurant/src/controllers/signup/cubit/UI/sign_up_password_visibility/sign_up_password_visibility_cubit.dart';
 import 'package:project_restaurant/src/views/login/login_screen.dart';
 
 class SignUpScreenForm extends StatelessWidget {
@@ -27,23 +27,21 @@ class SignUpScreenForm extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => NameValidationCubit(),
+            create: (context) => SignUpNameValidationCubit(),
           ),
           BlocProvider(
-            create: (context) => EmailValidationCubit(),
+            create: (context) => SignUpEmailValidationCubit(),
           ),
           BlocProvider(
-            create: (context) => PasswordVisibilityCubit(),
+            create: (context) => SignUpPasswordVisibilityCubit(),
           ),
         ],
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             children: [
-              
-              //Name
               /***** Name Input *****/
-              BlocConsumer<NameValidationCubit, NameValidationState>(
+              BlocConsumer<SignUpNameValidationCubit, SignUpNameValidationState>(
                 listener: (context, state) {},
                 builder: (context, state) {
                   return CustomTextFormField(
@@ -51,43 +49,43 @@ class SignUpScreenForm extends StatelessWidget {
                     controller: nameController,
                     labelText: 'Name',
                     suffixIcon:
-                        state is ValidName ? const Icon(Icons.check) : null,
+                        state is SignUpValidName ? const Icon(Icons.check) : null,
                     suffixIconColor: Colors.green,
                     onChanged: (val) =>
-                        NameValidationCubit.get(context).validateName(val),
+                        SignUpNameValidationCubit.get(context).validateName(val),
                   );
                 },
               ),
               /***** -END- Name Input *****/
 
               /***** Email Input *****/ 
-              BlocConsumer<EmailValidationCubit, EmailValidationState>(
+              BlocConsumer<SignUpEmailValidationCubit, SignUpEmailValidationState>(
                 listener: (context, state) {},
                 builder: (context, state) {
                   return CustomTextFormField(
                     validator: (email)=>_emailValidation(email!),
                     controller: emailController,
                     labelText: 'Email',
-                    suffixIcon: state is ValidEmail ? const Icon(Icons.check) : null,
+                    suffixIcon: state is SignUpValidEmail ? const Icon(Icons.check) : null,
                     suffixIconColor: Colors.green,
-                    onChanged: (val)=> EmailValidationCubit.get(context).validateEmail(val),
+                    onChanged: (val)=> SignUpEmailValidationCubit.get(context).validateEmail(val),
                   );
                 },
               ),
               /***** -END- Email Input *****/ 
               
               /***** Password *****/ 
-              BlocConsumer<PasswordVisibilityCubit, PasswordVisibilityState>(
+              BlocConsumer<SignUpPasswordVisibilityCubit, SignUpPasswordVisibilityState>(
                 listener: (context, state) {},
                 builder: (context, state) {
                   return CustomTextFormField(
                     validator: (password)=>_passwordValidation(password!),
                     controller: passwordController,
                     labelText: 'Password',
-                    obscureText: state is ShowPassword ? false : true ,
-                    suffixButtonIconData: state is ShowPassword ?  Icons.visibility_off : Icons.visibility,
+                    obscureText: state is SignUpShowPassword ? false : true ,
+                    suffixButtonIconData: state is SignUpShowPassword ?  Icons.visibility_off : Icons.visibility,
                     onTapSuffixButton: () {
-                      PasswordVisibilityCubit.get(context).toggleVisibility(); 
+                      SignUpPasswordVisibilityCubit.get(context).toggleVisibility(); 
                     },
                   );
                 },

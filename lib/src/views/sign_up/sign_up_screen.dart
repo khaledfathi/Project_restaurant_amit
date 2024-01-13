@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_restaurant/core/core_export.dart';
-import 'package:project_restaurant/src/controllers/signup/cubit/logic/sign_up/sign_up_cubit.dart';
+import 'package:project_restaurant/src/controllers/signup/cubit/sign_up/sign_up_cubit.dart';
 import 'package:project_restaurant/src/views/sign_up/components/sign_up_screen_app_bar.dart';
 import 'package:project_restaurant/src/views/sign_up/components/sign_up_screen_form.dart';
 
@@ -22,7 +22,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   //widgets
   final SignUpScreenAppBar _appBar = const SignUpScreenAppBar();
   //keys
-  GlobalKey<FormState> _signUpFormKey = GlobalKey();
+  final GlobalKey<FormState> _signUpFormKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {

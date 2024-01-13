@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:project_restaurant/core/core_export.dart';
+import 'package:project_restaurant/core/services/auth/auth.dart';
+import 'package:project_restaurant/src/models/user_model.dart';
 import 'package:project_restaurant/src/views/main/main_screen.dart';
 import 'package:project_restaurant/src/views/sign_up/sign_up_screen.dart';
 
@@ -23,6 +27,8 @@ class App extends StatelessWidget {
   ///init route dpened on last login state 
   String _initRoute (){
     if (Globals.sharedPreferences.getBool(IS_LOGIN)!){
+      String user = Globals.sharedPreferences.getString(CURRENT_USER)!; 
+      Auth.setCurrentUser(UserModel.fromMap(jsonDecode(user)));
       return MainScreen.route; 
     }
     return SignUpScreen.route; 
