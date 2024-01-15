@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:project_restaurant/core/services/auth/auth.dart';
 
-class ProfileDetailsBlock extends StatelessWidget {
+class ProfileDetailsBlock extends StatefulWidget {
   const ProfileDetailsBlock({super.key});
 
+  @override
+  State<ProfileDetailsBlock> createState() => _ProfileDetailsBlockState();
+}
+
+class _ProfileDetailsBlockState extends State<ProfileDetailsBlock> {
+  //values 
+
+  @override
+  void initState() {
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,7 +34,17 @@ class ProfileDetailsBlock extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(32),
                       ),
-                      child: Image.network(Auth.currentUser!.image!)))),
+                      child: Image.network(Auth.currentUser!.image!, 
+                        loadingBuilder: (context, child, loadingProgress) {//loading b4 display image
+                          if (loadingProgress == null ) {
+                            return child ;
+                          }
+                          return const CircularProgressIndicator(); 
+                        }
+                      )
+                      ),
+                      ),
+                      ),
           /***** -END- User Image *****/
 
           Expanded(

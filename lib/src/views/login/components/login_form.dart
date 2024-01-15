@@ -1,3 +1,5 @@
+// ignore_for_file: slash_for_doc_comments
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_restaurant/core/core_export.dart';
@@ -38,14 +40,15 @@ class LoginForm extends StatelessWidget {
                 listener: (context, state) {},
                 builder: (context, state) {
                   return CustomTextFormField(
+                    validator: (email)=>_emailValidation(email!),
                     labelText: 'Email',
                     controller: emailController,
                     suffixIcon: state is LoginValidEmail ? const Icon(Icons.check) : null ,
+                    suffixIconColor: Colors.green,
                     onChanged: (email) => LoginEmailValidationCubit.get(context).validateEmail(email) ,
                   );
                 },
               ),
-
               /***** -END- Email Input *****/
 
               /***** Password Input *****/
@@ -54,6 +57,7 @@ class LoginForm extends StatelessWidget {
                 listener: (context, state) {},
                 builder: (context, state) {
                   return CustomTextFormField(
+                    validator: (password)=>_passwordValidation(password!),
                     labelText: 'Password',
                     controller: passwordController,
                     obscureText: state is LoginShowPassword ? false : true,
@@ -102,7 +106,6 @@ class LoginForm extends StatelessWidget {
   String? _passwordValidation(String password) {
     Validation passwordValidate = Validation(password, fieldName: 'Password')
         .required()
-        .length(minLength: 8)
         .validate();
     if (passwordValidate.isValid) {
       return null;

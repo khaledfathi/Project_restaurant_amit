@@ -55,7 +55,8 @@ class LoginCubit extends Cubit<LoginState> {
                 emit(LoginFail());
               }
             }
-          }).catchError((e){
+          }).catchError((e){          
+            debugPrint('LoginCubit : login : exception : $e'); 
             msg = 'Connection Error'; 
             emit(LoginConnectionError());
           });

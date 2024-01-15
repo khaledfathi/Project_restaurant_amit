@@ -32,62 +32,69 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: _appBar,
       body: BlocProvider(
           create: (context) => LoginCubit(),
-          child: SingleChildScrollView(
-            child: SizedBox(
-              height: _heightWithOutAppBar(context),
-              child: Form(
-                // key: _loginFormKey,
-                child: Column(
-                  children: [
-                    /***** Header *****/
-                    const CustomHeaderText(title: 'Login'),
-                    /***** -END- Header *****/
+          child: GestureDetector(
+            onTap: () => FocusManager.instance.primaryFocus!.unfocus(),
+            child: SingleChildScrollView(
+              child: SizedBox(
+                height: _heightWithOutAppBar(context),
+                child: Form(
+                  // key: _loginFormKey,
+                  child: Column(
+                    children: [
+                      /***** Header *****/
+                      const CustomHeaderText(title: 'Login'),
+                      /***** -END- Header *****/
 
-                    /***** Form *****/
-                    BlocConsumer<LoginCubit, LoginState>(
-                      listener: (context, state) {},
-                      builder: (context, state) {
-                        return
-                         Form(
-                          key: _loginFormKey,
-                          child: LoginForm(
-                            emailController: _emailController,
-                            passwordController: _passwordController,
-                            onPressLogin: () => LoginCubit.get(context).login(
-                                context: context,
-                                email: _emailController.text,
-                                password: _passwordController.text),
-                          ),
-                        );
-                      },
-                    ),
-                    /***** -END- Form *****/
-
-                    /***** Login Status Indicator *****/
-                    BlocConsumer<LoginCubit, LoginState>(
+                      /***** Form *****/
+                      BlocConsumer<LoginCubit, LoginState>(
+                        listener: (context, state) {},
                         builder: (context, state) {
-                          return Container(
-                              padding: const EdgeInsets.all(15),
-                              child: _loginStatus(state));
+                          return Form(
+                            key: _loginFormKey,
+                            child: LoginForm(
+                              emailController: _emailController,
+                              passwordController: _passwordController,
+                              onPressLogin: () {
+                                FocusManager.instance.primaryFocus!.unfocus();
+                                if (_loginFormKey.currentState!.validate()) {
+                                  LoginCubit.get(context).login(
+                                      context: context,
+                                      email: _emailController.text,
+                                      password: _passwordController.text);
+                                }
+                              },
+                            ),
+                          );
                         },
-                        listener: (context, state) {}),
-                    /***** -EnD- Login Status Indicator *****/
+                      ),
+                      /***** -END- Form *****/
 
-                    /***** Social Media Block *****/
-                    Expanded(
-                        child: Stack(
-                      children: [
-                        Positioned(
-                            bottom: 10,
-                            child: CustomSocialMediaBlock(
-                              text: 'Or login with social media account',
-                              onTapFacebook: () {},
-                              onTapGoogle: () {},
-                            ))
-                      ],
-                    )),
-                    /***** -END- Social Media Block *****/
-                  ],
+                      /***** Login Status Indicator *****/
+                      BlocConsumer<LoginCubit, LoginState>(
+                          builder: (context, state) {
+                            return Container(
+                                padding: const EdgeInsets.all(15),
+                                child: _loginStatus(state));
+                          },
+                          listener: (context, state) {}),
+                      /***** -EnD- Login Status Indicator *****/
+
+                      /***** Social Media Block *****/
+                      Expanded(
+                          child: Stack(
+                        children: [
+                          Positioned(
+                              bottom: 10,
+                              child: CustomSocialMediaBlock(
+                                text: 'Or login with social media account',
+                                onTapFacebook: () {},
+                                onTapGoogle: () {},
+                              ))
+                        ],
+                      )),
+                      /***** -END- Social Media Block *****/
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -115,7 +122,9 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget? _loginStatus(LoginState state) {
     if (state is LoginLoading) {
       return const CircularProgressIndicator();
-    } else if (state is LoginFail || state is LoginNoInternet ||  state is LoginConnectionError) {
+    } else if (state is LoginFail ||
+        state is LoginNoInternet ||
+        state is LoginConnectionError) {
       return FittedBox(
         child: Text(
           LoginCubit.msg,

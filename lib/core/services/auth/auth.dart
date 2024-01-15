@@ -13,6 +13,7 @@ class Auth {
   static logout (BuildContext context){
     Globals.sharedPreferences.setBool(IS_LOGIN, false); 
     Globals.sharedPreferences.remove(CURRENT_USER); 
+    Auth.currentUser = null ; 
     Navigator.pushNamedAndRemoveUntil(context, LoginScreen.route, (route) => false);
   }
 }

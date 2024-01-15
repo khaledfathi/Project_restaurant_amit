@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_restaurant/core/services/auth/auth.dart';
 import 'package:project_restaurant/src/views/login/login_screen.dart';
 import 'package:project_restaurant/src/views/main/profile/components/profile_app_bar.dart';
 import 'package:project_restaurant/src/views/main/profile/components/profile_details_block.dart';
@@ -22,7 +23,6 @@ class ProfileScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    //header
                     /***** Header *****/
                     const ProfileHeader(),
                     /***** -END- Header *****/
@@ -57,10 +57,10 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     const Divider(color: Color.fromRGBO(155, 155, 155, 1)),
                     ProfileOptionCard(
-                      title: 'Logout',
-                      onTap: () => Navigator.of(context)
-                          .pushReplacementNamed(LoginScreen.route),
-                    ),
+                        title: 'Logout',
+                        onTap: () {
+                          Auth.logout(context); 
+                        }),
                     /***** -END- Options Cards *****/
                   ],
                 ),

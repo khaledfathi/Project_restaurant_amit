@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:project_restaurant/core/core_export.dart';
 import 'package:project_restaurant/core/services/auth/auth.dart';
 import 'package:project_restaurant/src/models/user_model.dart';
+import 'package:project_restaurant/src/views/login/login_screen.dart';
 import 'package:project_restaurant/src/views/main/main_screen.dart';
-import 'package:project_restaurant/src/views/sign_up/sign_up_screen.dart';
 
 void main() async {
   await AppConfig().apply();
@@ -31,6 +31,6 @@ class App extends StatelessWidget {
       Auth.setCurrentUser(UserModel.fromMap(jsonDecode(user)));
       return MainScreen.route; 
     }
-    return SignUpScreen.route; 
+    return LoginScreen.route;
   }
 }
