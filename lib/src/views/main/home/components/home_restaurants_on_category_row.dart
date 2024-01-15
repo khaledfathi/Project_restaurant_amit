@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:project_restaurant/src/views/main/home/components/home_restaurant_box.dart';
 
 class HomeRestaurantsInCategoryRow extends StatelessWidget {
-  final String? title ; 
-  final void Function()? onTapViewAll; 
-  final int? restaurantsCount; 
-  const HomeRestaurantsInCategoryRow({super.key, 
-    this.title, 
-    this.onTapViewAll , 
-    this.restaurantsCount, 
+  final String? restaurantCategoryName;
+  final void Function()? onTapViewAll;
+  final ListView? restaurants ;
+  const HomeRestaurantsInCategoryRow({
+    super.key,
+    this.restaurantCategoryName,
+    this.onTapViewAll,
+    this.restaurants,
   });
-
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 15),
-      color: Colors.red,
       height: 320,
+      width: MediaQuery.sizeOf(context).width,
       child: Column(
         children: [
           /***** header Box *****/
@@ -30,10 +29,12 @@ class HomeRestaurantsInCategoryRow extends StatelessWidget {
                         height: 50,
                         child: FittedBox(
                             alignment: Alignment.centerLeft,
-                            child: Text( title ?? 'box title',
-                            textAlign: TextAlign.left,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        )))),
+                            child: Text(
+                              restaurantCategoryName ?? 'box title',
+                              textAlign: TextAlign.left,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            )))),
                 Expanded(
                     child: InkWell(
                         onTap: onTapViewAll,
@@ -45,10 +46,15 @@ class HomeRestaurantsInCategoryRow extends StatelessWidget {
             ),
           ),
           /***** -END- header Box *****/
-          HomeRestaurantBoxBuilder(),
-          /***** Restaurants Boxs *****/
 
-       /***** -END- Restaurants Boxs *****/
+          /***** Restaurants Boxs *****/
+          Container(
+            margin: const EdgeInsets.only(top: 10),
+            height: 255,
+            width: MediaQuery.of(context).size.width,
+            child: restaurants,
+          ),
+          /***** -END- Restaurants Boxs *****/
         ],
       ),
     );

@@ -1,90 +1,88 @@
 import 'package:flutter/material.dart';
-import 'package:project_restaurant/core/services/auth/auth.dart';
+import 'package:project_restaurant/core/constants/general_const.dart';
 
-class HomeRestaurantBoxBuilder extends StatelessWidget {
-  const HomeRestaurantBoxBuilder({super.key});
+class HomeRestaurantBox extends StatelessWidget {
+  final String? restaurantName;
+  final IconData? favoriteIcon;
+  final void Function()? onTapFavoriteIcon;
+  final Widget? image; 
+  const HomeRestaurantBox(
+      {super.key,
+      this.restaurantName,
+      this.favoriteIcon,
+      this.onTapFavoriteIcon,
+      this.image      
+      });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.sizeOf(context).width,
-      height: 260,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return Container(
-            width: 150,
-            margin: const EdgeInsets.symmetric(horizontal: 10),
-            color: Colors.amber,
-            child: Column(
+    return Container(
+      width: 150,
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: Column(
+        children: [
+          /***** Restaurant Image *****/
+          Stack(
+            clipBehavior: Clip.none,
+            children: [
+              image ?? Image.asset(
+                NO_IMAGE ,
+                fit: BoxFit.cover,
+                height: 170,
+              ),
+              Positioned(
+                  bottom: -10,
+                  right: -10,
+                  child: InkWell(
+                      onTap: () {},
+                      child: CircleAvatar(
+                          child: Icon(favoriteIcon ??
+                              Icons.favorite_border_outlined)))),
+            ],
+          ),
+          /***** -END- Restaurant Image *****/
+
+          /***** Restaurant Rate Starts*****/
+          Padding(
+            padding: const EdgeInsets.all(5),
+            child: Row(
               children: [
-                /***** Restaurant Image *****/
-                Container(
-                  color: Colors.redAccent,
-                  height: 180,
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Image.network(
-                        Auth.currentUser!.image!,
-                        fit: BoxFit.cover,
-                        height: 170,
-                      ),
-                      Positioned(
-                          bottom: -3,
-                          right: -10,
-                          child: InkWell(
-                              onTap: () {},
-                              child: const CircleAvatar(
-                                  child: Icon(Icons.favorite_border)))),
-                    ],
-                  ),
+                ..._listOfStars(),
+                const Text(
+                  '(10)',
+                  style: TextStyle(fontSize: 10),
                 ),
-                /***** -END- Restaurant Image *****/
-
-                /***** Restaurant Rate Starts*****/
-                Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: Row(
-                    children: [
-                      ..._listOfStars(),
-                      const Text(
-                        '(10)',
-                        style: TextStyle(fontSize: 10),
-                      ),
-                    ],
-                  ),
-                ),
-                /***** -END- Restaurant Rate Starts*****/
-
-                /***** Restaurant Name*****/
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  child: FittedBox(
-                    child: Text(
-                      'restautant name',
-                      style: TextStyle(fontSize: 30),
-                    ),
-                  ),
-                )
-                /***** -END- Restaurant Name*****/
               ],
             ),
-          );
-        },
+          ),
+          /***** -END- Restaurant Rate Starts*****/
+
+          /***** Restaurant Name*****/
+          Container(
+            height: 55,
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: FittedBox(
+              child: Text(
+                restaurantName?? 'restautant name',
+                style: const TextStyle(fontSize: 30),
+              ),
+            ),
+          )
+          /***** -END- Restaurant Name*****/
+        ],
       ),
     );
   }
 
-  List<Widget> _listOfStars( {int count = 5}) {
+  List<Widget> _listOfStars({int count = 5}) {
     List<Widget> stars = [];
     for (var i = 0; i < count; i++) {
       stars.add(const Icon(
         Icons.star,
         color: Colors.yellow,
         size: 14,
-      ));     
+      ));
     }
     return stars;
   }
