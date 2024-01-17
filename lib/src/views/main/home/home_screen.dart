@@ -1,9 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:project_restaurant/core/core_export.dart';
+import 'package:project_restaurant/core/custom_widgets/blocks/custom_lodaing.dart';
+import 'package:project_restaurant/core/custom_widgets/blocks/custom_no_internet.dart';
 import 'package:project_restaurant/src/controllers/home/home_controller.dart';
 import 'package:project_restaurant/src/views/main/home/components/home_restaurant_box.dart';
 import 'package:project_restaurant/src/views/main/home/components/home_restaurants_on_category_row.dart';
@@ -53,30 +54,30 @@ class _HomeScreenState extends State<HomeScreen> {
               /***** Restaurants In Specific Category *****/
               StreamBuilder(
                   stream: _internetConnection,
-                  builder: (context, snapshot) {
-                    debugPrint('HomeScreen : internet stream status = ${snapshot.connectionState}');
-                    if (snapshot.connectionState == ConnectionState.active) {
-                      if (snapshot.data == InternetStatus.connected) {
+                  builder: (context, internetConnectionSnapshot) {
+                    debugPrint('HomeScreen : internet stream status = ${internetConnectionSnapshot.connectionState}');
+                    if (internetConnectionSnapshot.connectionState == ConnectionState.active) {
+                      if (internetConnectionSnapshot.data == InternetStatus.connected) {
                         return FutureBuilder(
                             future: _restaurants,
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
+                            builder: (context, restaurantSnapshot) {
+                              if (restaurantSnapshot.connectionState ==
                                   ConnectionState.done) {
                                 return Column(
                                   children: _listOfRestaurantsOnCategory(
-                                      snapshot.data),
+                                      restaurantSnapshot.data),
                                 );
                               } else {
-                                return _loading();
+                                return const CustomLoading();
                               }
                             });
-                      } else if (snapshot.data == InternetStatus.disconnected) {
-                        return _noInternet();
+                      } else if (internetConnectionSnapshot.data == InternetStatus.disconnected) {
+                        return const CustomNoInternet();
                       } else {
-                        return _loading();
+                        return const CustomLoading();
                       }
                     }
-                    return _loading();
+                    return const CustomLoading();
                   }),
               /***** Restaurants In Specific Category *****/
 
@@ -121,31 +122,5 @@ class _HomeScreenState extends State<HomeScreen> {
       ));
     }
     return restaurants;
-  }
-
-  ///loading animation widget
-  Widget _loading() {
-    return SizedBox(
-      height: 400,
-      child: Center(
-        child: LoadingAnimationWidget.fourRotatingDots(
-            color: Colors.amber, size: 250),
-      ),
-    );
-  }
-
-  /// no internet sign widget
-  Widget _noInternet() {
-    return SizedBox(
-      height: 400,
-      child: Column(children: [
-        Image.asset(NO_INTERNET_IMAGE),
-        const FittedBox(
-            child: Text(
-          'No Connection ,please check your internet',
-          style: TextStyle(color: Colors.red),
-        )),
-      ]),
-    );
   }
 }
