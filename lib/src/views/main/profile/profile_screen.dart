@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:project_restaurant/core/services/auth/auth.dart';
-import 'package:project_restaurant/src/views/login/login_screen.dart';
 import 'package:project_restaurant/src/views/main/profile/components/profile_app_bar.dart';
 import 'package:project_restaurant/src/views/main/profile/components/profile_details_block.dart';
 import 'package:project_restaurant/src/views/main/profile/components/profile_header.dart';
@@ -32,27 +31,27 @@ class ProfileScreen extends StatelessWidget {
                     /***** -END- profile details *****/
 
                     /***** Options Cards *****/
-                    ProfileOptionCard(
+                    const ProfileOptionCard(
                       title: 'My Order',
                     ),
                     const Divider(color: Color.fromRGBO(155, 155, 155, 1)),
-                    ProfileOptionCard(
+                    const ProfileOptionCard(
                       title: 'Shipping addresses',
                     ),
                     const Divider(color: Color.fromRGBO(155, 155, 155, 1)),
-                    ProfileOptionCard(
+                    const ProfileOptionCard(
                       title: 'Payment Methods',
                     ),
                     const Divider(color: Color.fromRGBO(155, 155, 155, 1)),
-                    ProfileOptionCard(
+                    const ProfileOptionCard(
                       title: 'Promocodes',
                     ),
                     const Divider(color: Color.fromRGBO(155, 155, 155, 1)),
-                    ProfileOptionCard(
+                    const ProfileOptionCard(
                       title: 'My Reviews',
                     ),
                     const Divider(color: Color.fromRGBO(155, 155, 155, 1)),
-                    ProfileOptionCard(
+                    const ProfileOptionCard(
                       title: 'Settings',
                     ),
                     const Divider(color: Color.fromRGBO(155, 155, 155, 1)),

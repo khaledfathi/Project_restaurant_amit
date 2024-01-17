@@ -7,7 +7,6 @@ import 'package:project_restaurant/src/views/main/home/home_screen.dart';
 import 'package:project_restaurant/src/views/main/main_screen.dart';
 import 'package:project_restaurant/src/views/main/profile/profile_screen.dart';
 import 'package:project_restaurant/src/views/main/shop/shop_screen.dart';
-import 'package:project_restaurant/src/views/no_internet/no_internet_screen.dart';
 import 'package:project_restaurant/src/views/page_not_found/page_not_found_screen.dart';
 import 'package:project_restaurant/src/views/sign_up/sign_up_screen.dart';
 
@@ -26,7 +25,6 @@ class RouteHandler {
       case BagScreen.route :  return MaterialPageRoute(builder: (context)=>const BagScreen() , settings: setting);
       /***** -END- Main Screen -> Sub Screens *****/
 
-      case NoInternetScreen.route :  return MaterialPageRoute(builder: (context)=>const NoInternetScreen() , settings: setting);
       default : return MaterialPageRoute(builder: (_)=>const PageNotFound() , settings: setting); 
     }    
   }

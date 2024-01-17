@@ -65,7 +65,7 @@ class HomeRestaurantBox extends StatelessWidget {
             child: FittedBox(
               child: Text(
                 restaurantName?? 'restautant name',
-                style: const TextStyle(fontSize: 30),
+                style: const TextStyle(fontSize: 18),
               ),
             ),
           )
