@@ -3,14 +3,14 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:project_restaurant/src/controllers/products_on_category/products_on_category_args.dart';
 import 'package:project_restaurant/src/views/products_on_category/products_on_category_screen.dart';
 
-class ShopRestaurantCategoryBox extends StatelessWidget {
+class ShopProductsCategoriesBox extends StatelessWidget {
   final int productCategoryId ; 
-  final String  productName ; 
-  final String productImage ; 
-  const ShopRestaurantCategoryBox({super.key,
+  final String  productCategoryName ; 
+  final String productCategoryImage ; 
+  const ShopProductsCategoriesBox({super.key,
     required this.productCategoryId, 
-    required this.productName,
-    required this.productImage,
+    required this.productCategoryName,
+    required this.productCategoryImage,
   });
 
   @override
@@ -18,7 +18,9 @@ class ShopRestaurantCategoryBox extends StatelessWidget {
     return InkWell(
       onTap: () => Navigator.pushNamed(context, ProductsOnCategoryScreen.route,
           arguments: ProductOnCategoryArgs(
-              productCategoryId: productCategoryId)),
+            productCategoryId: productCategoryId,
+            productCategoryName:productCategoryName 
+          )),
       child: Row(
         children: [
           Expanded(
@@ -26,14 +28,14 @@ class ShopRestaurantCategoryBox extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: FittedBox(
               child: Text(
-                productName, 
+                productCategoryName, 
                 style: const TextStyle(fontSize: 18),
               ),
             ),
           )),
           Expanded(
             child: Image.network(
-              productImage,
+              productCategoryImage,
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress == null) {
                   return child;
