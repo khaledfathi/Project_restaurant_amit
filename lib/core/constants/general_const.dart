@@ -12,4 +12,5 @@ const String NO_INTERNET_IMAGE = 'assets/images/no_internet_image.png';
 //shared preferences 
 const String IS_LOGIN = 'isLogin' ; 
 const String CURRENT_USER = 'currentUser'; 
-const String API_TOKEN = 'apiToken' ; 
+const String API_TOKEN = 'apiToken' ;
+const String PRODUCT_FAVORITES = 'product-favorites';

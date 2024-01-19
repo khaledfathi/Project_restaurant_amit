@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:project_restaurant/core/core_export.dart';
+import 'package:project_restaurant/src/models/restaurant_model.dart';
 
 class HomeController {
   Future<List> restaurantsData() async {
@@ -32,3 +33,4 @@ class HomeController {
     return data;
   }
 }
+    

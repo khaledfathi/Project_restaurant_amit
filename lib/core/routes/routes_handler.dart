@@ -8,6 +8,8 @@ import 'package:project_restaurant/src/views/main/main_screen.dart';
 import 'package:project_restaurant/src/views/main/profile/profile_screen.dart';
 import 'package:project_restaurant/src/views/main/shop/shop_screen.dart';
 import 'package:project_restaurant/src/views/page_not_found/page_not_found_screen.dart';
+import 'package:project_restaurant/src/views/products_on_category/products_on_category_screen.dart';
+import 'package:project_restaurant/src/views/products_on_restaurant/products_on_restaurant_screen.dart';
 import 'package:project_restaurant/src/views/sign_up/sign_up_screen.dart';
 
 class RouteHandler {
@@ -25,6 +27,8 @@ class RouteHandler {
       case BagScreen.route :  return MaterialPageRoute(builder: (context)=>const BagScreen() , settings: setting);
       /***** -END- Main Screen -> Sub Screens *****/
 
+      case ProductsOnCategoryScreen.route : return MaterialPageRoute(builder: (context)=> const ProductsOnCategoryScreen(), settings:setting);
+      case ProductsOnRestaurantScreen.route : return MaterialPageRoute(builder: (context)=> const ProductsOnRestaurantScreen(), settings:setting);
       default : return MaterialPageRoute(builder: (_)=>const PageNotFound() , settings: setting); 
     }    
   }

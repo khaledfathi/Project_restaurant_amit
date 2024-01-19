@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_restaurant/core/core_export.dart';
 import 'package:project_restaurant/core/services/auth/auth.dart';
+import 'package:project_restaurant/src/controllers/internet_checker/cubit/internet_cubit.dart';
+import 'package:project_restaurant/src/controllers/products_on_category/cubit/favorites_cubit.dart';
 import 'package:project_restaurant/src/models/user_model.dart';
 import 'package:project_restaurant/src/views/login/login_screen.dart';
 import 'package:project_restaurant/src/views/main/main_screen.dart';
@@ -15,12 +18,24 @@ class App extends StatelessWidget {
   const App({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: MainTheme.apply,
-      debugShowCheckedModeBanner: false,
-      initialRoute: _initRoute(),
-      onGenerateRoute: RouteHandler.generateRoutes,
-    );
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => InternetCubit(),
+          ),
+          BlocProvider(create: (context)=> FavoritesCubit())
+        ],
+        child: BlocConsumer<InternetCubit , InternetState>(
+            builder: (context, state) {
+              InternetCubit.get(context).connectionListen(); 
+              return MaterialApp(
+                theme: MainTheme.apply,
+                debugShowCheckedModeBanner: false,
+                initialRoute: _initRoute(),
+                onGenerateRoute: RouteHandler.generateRoutes,
+              );
+            },
+            listener: (context, state) {}));
   }
 
   ///init route dpened on last login state
