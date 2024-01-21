@@ -20,6 +20,8 @@ class FavoritesScreen extends StatefulWidget {
 class _FavoritesScreenState extends State<FavoritesScreen> {
   //screen controller
   final FavoritesController _controller = FavoritesController();
+  //favorite products list
+  List<ProductModel> _favoriteProducts = [];
 
   @override
   Widget build(BuildContext context) {
@@ -40,30 +42,31 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                       future: _controller.productInFavorites(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
-                          List<ProductModel> favoriteProducts = snapshot.data!;
+                          _favoriteProducts = snapshot.data!;
                           return BlocConsumer<FavoritesUiCubit,
                                   FavoritesUiState>(
                               builder: (context, state) {
-                                return ListView.builder(
-                                  itemCount: favoriteProducts.length,
-                                  itemBuilder: (context, index) {
-                                    return FavoritesProductBox(
-                                      image: favoriteProducts[index].image!,
-                                      name: favoriteProducts[index].name!,
-                                      restaurantName: favoriteProducts[index]
-                                          .restaurantName!,
-                                      discount:
-                                          favoriteProducts[index].discount!,
-                                      price: favoriteProducts[index].price!,
-                                      onTapAddToCart: () {
-                                      },
-                                      onTapRemoveItem: () {
-                                        FavoritesUiCubit.get(context).removeFromFavorites(favoriteProducts[index].id!.toString()).then((value) => print(value),);
-                                        print(state); 
-                                      },
-                                    );
-                                  },
+                                return ListView(
+                                  children:
+                                      _productsBoxs(context, _favoriteProducts),
                                 );
+                                // return ListView.builder(
+                                //   itemCount: favoriteProducts.length,
+                                //   itemBuilder: (context, index) {
+                                //     return FavoritesProductBox(
+                                //       image: favoriteProducts[index].image!,
+                                //       name: favoriteProducts[index].name!,
+                                //       restaurantName: favoriteProducts[index].restaurantName!,
+                                //       discount: favoriteProducts[index].discount!,
+                                //       price: favoriteProducts[index].price!,
+                                //       onTapAddToCart: () {},
+                                //       onTapRemoveItem: () {
+                                //         FavoritesUiCubit.get(context).removeFromFavorites( favoriteProducts[index].id!.toString());
+                                //         print(state);
+                                //       },
+                                //     );
+                                //   },
+                                // );
                               },
                               listener: (context, state) {});
                         } else {
@@ -77,5 +80,31 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
             ),
           ),
         ));
+  }
+
+  List<Widget> _productsBoxs(
+      BuildContext context, List<ProductModel> products) {
+    List<Widget> producstList = [];
+    products.asMap().forEach((index, product) {
+      producstList.add(BlocConsumer<FavoritesUiCubit, FavoritesUiState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return FavoritesProductBox(
+            image: product.image!,
+            name: product.name!,
+            restaurantName: product.restaurantName!,
+            discount: product.discount!,
+            price: product.price!,
+            onTapAddToCart: () {},
+            onTapRemoveItem: () async {
+              _favoriteProducts.removeAt(index);
+              FavoritesUiCubit.get(context)
+                  .removeFromFavorites(product.id!.toString());
+            },
+          );
+        },
+      ));
+    });
+    return producstList;
   }
 }
