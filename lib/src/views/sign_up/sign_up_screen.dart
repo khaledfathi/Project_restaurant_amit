@@ -31,7 +31,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: BlocProvider(
           create: (context) => SignUpCubit(),
           child: GestureDetector(
-            onTap: ()=> FocusManager.instance.primaryFocus!.unfocus(), //dismiss keyboard 
+            onTap: ()=> FocusManager.instance.primaryFocus!.unfocus(), //dismiss keyboard
             child: SingleChildScrollView(
               child: SizedBox(
                 height: _heightWithOutAppBar(context),
@@ -40,7 +40,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     /****** Header ******/
                     const CustomHeaderText(title: 'Sign Up'),
                     /****** -END- Header ******/
-                    
+
                     /****** Form ******/
                     BlocConsumer<SignUpCubit, SignUpState>(
                         listener: (context, state) {},
@@ -66,7 +66,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           );
                         }),
                     /****** -END- Form ******/
-                    
+
                     /****** Social Media Buttons Block ******/
                     Expanded(
                         child: Stack(
@@ -97,7 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         kToolbarHeight;
   }
 
-  /// indecator widget  to show status of sign up 
+  /// indecator widget  to show status of sign up
   Widget? _signUpState(SignUpState state) {
     if (state is SignUpLoading) {
       return const CircularProgressIndicator();

@@ -6,6 +6,7 @@ import 'package:project_restaurant/core/custom_widgets/blocks/custom_lodaing.dar
 import 'package:project_restaurant/core/custom_widgets/blocks/custom_no_internet.dart';
 import 'package:project_restaurant/src/controllers/home/home_controller.dart';
 import 'package:project_restaurant/src/controllers/internet_checker/cubit/internet_cubit.dart';
+import 'package:project_restaurant/src/models/restaurant_model.dart';
 import 'package:project_restaurant/src/views/main/home/components/home_restaurant_box.dart';
 import 'package:project_restaurant/src/views/main/home/components/home_restaurants_on_category_row.dart';
 
@@ -61,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             }
                           });
                     }else if (state is InternetDisconnected){
-                      return const CustomNoInternet(); 
+                      return const CustomNoInternet();
                     }
                     return const CustomLoading();
                   },
@@ -75,20 +76,20 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   /// list of widgets of restaurants depend on its category as row
-  List<Widget> _listOfRestaurantsOnCategory(List data) {
+  List<Widget> _listOfRestaurantsOnCategory(List<List<RestaurantModel>> data) {
     List<Widget> restaurants = [];
     for (var elements in data) {
       restaurants.add(HomeRestaurantsInCategoryRow(
-        restaurantCategoryName: elements[0]['category_name'],
+        restaurantCategoryName: elements[0].categoryName,
         onTapViewAll: () => print("OK"),
         restaurants: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: elements.length,
           itemBuilder: (context, index) {
             return HomeRestaurantBox(
-              restaurantName: elements[index]['name'],
+              restaurantName: elements[index].name,
               image: Image.network(
-                elements[index]['image'],
+                elements[index].image!,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) {
                     return child;

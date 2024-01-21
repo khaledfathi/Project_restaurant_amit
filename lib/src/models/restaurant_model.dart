@@ -1,5 +1,5 @@
 class RestaurantModel {
-  String? id ;
+  int? id ;
   String? categoryId ;
   String? categoryName ; 
   String? name ; 

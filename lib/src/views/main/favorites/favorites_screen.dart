@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_restaurant/core/custom_widgets/blocks/custom_lodaing.dart';
+import 'package:project_restaurant/core/custom_widgets/blocks/custom_no_internet.dart';
+import 'package:project_restaurant/src/controllers/favorites/cubit/favorites_ui_cubit.dart';
 import 'package:project_restaurant/src/controllers/favorites/favorites_controller.dart';
+import 'package:project_restaurant/src/controllers/internet_checker/cubit/internet_cubit.dart';
+import 'package:project_restaurant/src/models/product_model.dart';
+import 'package:project_restaurant/src/views/main/favorites/components/favorites_product_box.dart';
 
 class FavoritesScreen extends StatefulWidget {
   //route
@@ -17,34 +23,59 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text("Favorites"),
-        ),
-        body: FutureBuilder(
-            future: _controller.productInFavorites(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                List favoriteProducts = snapshot.data!;
-                return ListView.builder(
-                  itemCount: favoriteProducts.length,
-                  itemBuilder: (context, index) {
-                    return  Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          children: [
-                            Image.network(favoriteProducts[index]['image'],width: 50,),
-                            Text('Name : ${favoriteProducts[index]['name']}'),
-                            Text('Restaurant : ${favoriteProducts[index]['restaurant_name']}'),
-                            Text('Discount : ${favoriteProducts[index]['discount']}'),
-                            Text('Price : ${favoriteProducts[index]['price']}'),
-                          ],
-                        ));
-                  },
-                );
-              } else {
-                return const CustomLoading();
-              }
-            }));
+    return BlocProvider(
+        create: (context) => FavoritesUiCubit(),
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text("Favorites"),
+            centerTitle: true,
+          ),
+          body: SizedBox(
+            width: MediaQuery.sizeOf(context).width,
+            child: BlocConsumer<InternetCubit, InternetState>(
+              listener: (context, state) {},
+              builder: (context, state) {
+                if (state is InternetConnected) {
+                  return FutureBuilder(
+                      future: _controller.productInFavorites(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          List<ProductModel> favoriteProducts = snapshot.data!;
+                          return BlocConsumer<FavoritesUiCubit,
+                                  FavoritesUiState>(
+                              builder: (context, state) {
+                                return ListView.builder(
+                                  itemCount: favoriteProducts.length,
+                                  itemBuilder: (context, index) {
+                                    return FavoritesProductBox(
+                                      image: favoriteProducts[index].image!,
+                                      name: favoriteProducts[index].name!,
+                                      restaurantName: favoriteProducts[index]
+                                          .restaurantName!,
+                                      discount:
+                                          favoriteProducts[index].discount!,
+                                      price: favoriteProducts[index].price!,
+                                      onTapAddToCart: () {
+                                      },
+                                      onTapRemoveItem: () {
+                                        FavoritesUiCubit.get(context).removeFromFavorites(favoriteProducts[index].id!.toString()).then((value) => print(value),);
+                                        print(state); 
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                              listener: (context, state) {});
+                        } else {
+                          return const CustomLoading();
+                        }
+                      });
+                } else {
+                  return const CustomNoInternet();
+                }
+              },
+            ),
+          ),
+        ));
   }
 }

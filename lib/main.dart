@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_restaurant/core/core_export.dart';
 import 'package:project_restaurant/core/services/auth/auth.dart';
+import 'package:project_restaurant/src/controllers/favorites/cubit/favorites_ui_cubit.dart';
 import 'package:project_restaurant/src/controllers/internet_checker/cubit/internet_cubit.dart';
 import 'package:project_restaurant/src/controllers/products_on_category/cubit/favorites_cubit.dart';
 import 'package:project_restaurant/src/models/user_model.dart';
@@ -23,11 +24,11 @@ class App extends StatelessWidget {
           BlocProvider(
             create: (context) => InternetCubit(),
           ),
-          BlocProvider(create: (context)=> FavoritesCubit())
+          BlocProvider(create: (context)=> FavoritesCubit()),
         ],
         child: BlocConsumer<InternetCubit , InternetState>(
             builder: (context, state) {
-              InternetCubit.get(context).connectionListen(); 
+              InternetCubit.get(context).connectionListen();
               return MaterialApp(
                 theme: MainTheme.apply,
                 debugShowCheckedModeBanner: false,
@@ -48,3 +49,4 @@ class App extends StatelessWidget {
     return LoginScreen.route;
   }
 }
+

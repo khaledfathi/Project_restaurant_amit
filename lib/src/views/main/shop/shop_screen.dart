@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project_restaurant/core/core_export.dart';
 import 'package:project_restaurant/core/custom_widgets/blocks/custom_lodaing.dart';
 import 'package:project_restaurant/core/custom_widgets/blocks/custom_no_internet.dart';
 import 'package:project_restaurant/src/controllers/internet_checker/cubit/internet_cubit.dart';
+import 'package:project_restaurant/src/controllers/shop/shop_controller.dart';
+import 'package:project_restaurant/src/models/product_category_model.dart';
 import 'package:project_restaurant/src/views/main/shop/components/shop_products_categories_box.dart';
 
 class ShopScreen extends StatefulWidget {
@@ -17,6 +18,8 @@ class ShopScreen extends StatefulWidget {
 }
 
 class _ShopScreenState extends State<ShopScreen> {
+  //screen controller
+  ShopController _controller = ShopController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +42,11 @@ class _ShopScreenState extends State<ShopScreen> {
             builder: (context, state) {
               if (state is InternetConnected) {
                 return FutureBuilder(
-                    future: Globals.api.get(API_GET_PRODUCT_CATEGORIES),
+                    future: _controller.getCategories(),
                     builder: (context, categorySnapshot) {
                       if (categorySnapshot.connectionState ==
                           ConnectionState.done) {
-                        List productCategory = categorySnapshot.data!.data;
+                        List<ProductCategoryModel> productCategory = categorySnapshot.data!;
                         return Container(
                           margin: const EdgeInsets.only(top: 30),
                           /***** List of restaurants categories*****/
@@ -59,9 +62,9 @@ class _ShopScreenState extends State<ShopScreen> {
                                 ),
                                 /***** Product Category Box *****/
                                 child: ShopProductsCategoriesBox(
-                                    productCategoryId: productCategory[index]['id'],
-                                    productCategoryName: productCategory[index]['name'],
-                                    productCategoryImage: productCategory[index]['image']),
+                                    productCategoryId: productCategory[index].id!,
+                                    productCategoryName: productCategory[index].name!,
+                                    productCategoryImage: productCategory[index].image!),
                                 /***** -END- Product Category Box *****/
                               );
                             },

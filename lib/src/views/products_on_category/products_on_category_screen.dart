@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_restaurant/core/core_export.dart';
 import 'package:project_restaurant/core/custom_widgets/blocks/custom_lodaing.dart';
 import 'package:project_restaurant/src/controllers/products_on_category/cubit/favorites_cubit.dart';
+import 'package:project_restaurant/src/controllers/products_on_category/product_on_category_controller.dart';
 import 'package:project_restaurant/src/controllers/products_on_category/products_on_category_args.dart';
+import 'package:project_restaurant/src/models/product_model.dart';
 import 'package:project_restaurant/src/views/products_on_category/components/products_product_box.dart';
 
 class ProductsOnCategoryScreen extends StatefulWidget {
@@ -16,6 +18,9 @@ class ProductsOnCategoryScreen extends StatefulWidget {
 }
 
 class _ProductsOnCategoryStateScreen extends State<ProductsOnCategoryScreen> {
+  //screen controller
+  final ProductOnCategoryController _controller = ProductOnCategoryController();
+
   @override
   Widget build(BuildContext context) {
     ProductOnCategoryArgs? args =
@@ -28,11 +33,10 @@ class _ProductsOnCategoryStateScreen extends State<ProductsOnCategoryScreen> {
         centerTitle: true,
       ),
       body: FutureBuilder(
-          future: Globals.api.get(
-              "$API_GET_PRODUCT_FILTER_BY_CATEGROY/${args.productCategoryId}"),
+          future: _controller.getProductCategory(args.productCategoryId!),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              List products = snapshot.data!.data;
+              List<ProductModel> products = snapshot.data!;
 
               /***** Product  *****/
               return Container(
@@ -50,16 +54,16 @@ class _ProductsOnCategoryStateScreen extends State<ProductsOnCategoryScreen> {
                         listener: (context, state) {},
                         builder: (context, state) {
                           return ProductsProductBox(
-                              image: products[index]['image'],
-                              name: products[index]['name'],
-                              restaurantName: products[index]
-                                  ['restaurant_name'],
-                              discount: products[index]['discount'],
-                              price: products[index]['price'],
-                              favoriteIcon: _setFavoriteIcon(products[index]['id'].toString()),
+                              image: products[index].image!,
+                              name: products[index].name!,
+                              restaurantName: products[index].restaurantName!,
+                              discount: products[index].discount!,
+                              price: products[index].price!,
+                              favoriteIcon: _setFavoriteIcon(
+                                  products[index].id!.toString()),
                               onTapFavorite: () {
                                 FavoritesCubit.get(context).favoritesAction(
-                                    products[index]['id'].toString());
+                                    products[index].id!.toString());
                               });
                         },
                       );
@@ -72,9 +76,8 @@ class _ProductsOnCategoryStateScreen extends State<ProductsOnCategoryScreen> {
           }),
     );
   }
-  
-  
-  /// check if product in favorites 
+
+  /// check if product in favorites
   bool _isInFavorite(String productId) {
     List<String>? favorites =
         Globals.sharedPreferences.getStringList(PRODUCT_FAVORITES);
@@ -85,7 +88,7 @@ class _ProductsOnCategoryStateScreen extends State<ProductsOnCategoryScreen> {
     }
     return false;
   }
-  
+
   ///set favorite icon
   Icon? _setFavoriteIcon(String productId) {
     return _isInFavorite(productId)
