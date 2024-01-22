@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_restaurant/core/constants/general_const.dart';
+import 'package:project_restaurant/core/custom_widgets/blocks/custom_list_of_stars.dart';
 
 class HomeRestaurantBox extends StatelessWidget {
   final String? restaurantName;
@@ -43,17 +44,9 @@ class HomeRestaurantBox extends StatelessWidget {
           /***** -END- Restaurant Image *****/
 
           /***** Restaurant Rate Starts*****/
-          Padding(
-            padding: const EdgeInsets.all(5),
-            child: Row(
-              children: [
-                ..._listOfStars(),
-                const Text(
-                  '(10)',
-                  style: TextStyle(fontSize: 10),
-                ),
-              ],
-            ),
+          const Padding(
+            padding:  EdgeInsets.all(5),
+            child:  CustomListOfStars(),
           ),
           /***** -END- Restaurant Rate Starts*****/
 
@@ -73,17 +66,5 @@ class HomeRestaurantBox extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  List<Widget> _listOfStars({int count = 5}) {
-    List<Widget> stars = [];
-    for (var i = 0; i < count; i++) {
-      stars.add(const Icon(
-        Icons.star,
-        color: Colors.yellow,
-        size: 14,
-      ));
-    }
-    return stars;
   }
 }

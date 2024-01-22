@@ -36,6 +36,7 @@ class FavoritesProductBox extends StatelessWidget {
               // Product Image
               SizedBox(
                   width: 104,
+                  height: double.infinity,
                   child: Image.network(
                     image,
                     fit: BoxFit.cover,
@@ -56,12 +57,11 @@ class FavoritesProductBox extends StatelessWidget {
               //Prodcut details coulmn
               Expanded(
                   child: Container(
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.only(left:10),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          //restaurant that provide this product
                           Text(restaurantName,
                               style: const TextStyle(
                                   color: Color.fromRGBO(155, 155, 155, 1),
@@ -75,10 +75,12 @@ class FavoritesProductBox extends StatelessWidget {
                           Row(
                             children: [
                               Expanded(
+                                flex: 1,
                                 child: Text('$price\$',
-                                    style: const TextStyle(fontSize: 14)),
+                                    style: const TextStyle(fontSize: 14 , fontWeight: FontWeight.bold)),
                               ),
                               Expanded(
+                                  flex: 2,
                                   child: Row(children: [
                                 ..._listOfStars(),
                                 const Text(' (10)'),

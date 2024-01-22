@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:project_restaurant/core/custom_widgets/blocks/custom_list_of_stars.dart';
 
 class ProductsProductBox extends StatelessWidget {
   final String image;
@@ -72,17 +73,9 @@ class ProductsProductBox extends StatelessWidget {
         ),
 
         /***** Restaurant Rate Starts*****/
-        Padding(
-          padding: const EdgeInsets.all(5),
-          child: Row(
-            children: [
-              ..._listOfStars(),
-              const Text(
-                '(10)',
-                style: TextStyle(fontSize: 10),
-              ),
-            ],
-          ),
+        const Padding(
+          padding: EdgeInsets.all(5),
+          child: CustomListOfStars(),
         ),
         /***** -END- Restaurant Rate Starts*****/
 
@@ -110,18 +103,5 @@ class ProductsProductBox extends StatelessWidget {
         /***** -END- Product Text Details ******/
       ],
     );
-  }
-
-  ///list of starts icon widget for rate product
-  List<Widget> _listOfStars({int count = 5}) {
-    List<Widget> stars = [];
-    for (var i = 0; i < count; i++) {
-      stars.add(const Icon(
-        Icons.star,
-        color: Colors.yellow,
-        size: 14,
-      ));
-    }
-    return stars;
   }
 }

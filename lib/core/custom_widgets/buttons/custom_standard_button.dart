@@ -6,19 +6,22 @@ class CustomStanderButton extends StatelessWidget {
   final EdgeInsets? margin;
   final double? height ;
   final double? width;
+  final EdgeInsets? padding; 
   const CustomStanderButton({super.key, 
     this.text,
     this.onPressed,
     this.margin,
     this.height,
-    this.width
+    this.width,
+    this.padding
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: height?? 48,
-      width: width?? double.infinity,
+      width: width?? MediaQuery.of(context).size.width,
+      padding: padding,     
       margin: margin ?? const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
