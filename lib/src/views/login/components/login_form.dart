@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_restaurant/core/core_export.dart';
-import 'package:project_restaurant/src/controllers/login/cubit/UI/login_email_validation/login_email_validation_cubit.dart';
-import 'package:project_restaurant/src/controllers/login/cubit/UI/login_password_visibility/login_password_visibility_cubit.dart';
+import 'package:project_restaurant/core/states/login/ui_validattion/login_email_validation/login_email_validation_cubit.dart';
+import 'package:project_restaurant/core/states/login/ui_validattion/login_password_visibility/login_password_visibility_cubit.dart';
 import 'package:project_restaurant/src/views/sign_up/sign_up_screen.dart';
 
 class LoginForm extends StatelessWidget {
