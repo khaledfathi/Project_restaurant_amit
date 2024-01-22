@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:project_restaurant/core/core_export.dart';
 
-part 'favorites_state.dart';
+part 'product_on_category_favorites_state.dart';
 
-class FavoritesCubit extends Cubit<FavoritesState> {
-  FavoritesCubit() : super(FavoritesInitial());
-  static FavoritesCubit get(context) => BlocProvider.of(context);
+class ProductOnCategoryFavoritesCubit extends Cubit<ProductOnCategoryFavoritesState> {
+  ProductOnCategoryFavoritesCubit() : super(ProductOnCategoryFavoritesInitial());
+  static ProductOnCategoryFavoritesCubit get(context) => BlocProvider.of(context);
 
   Future<bool> favoritesAction(String productId) async {
     //get all products marked as favorites
@@ -24,13 +24,13 @@ class FavoritesCubit extends Cubit<FavoritesState> {
       if (inFavoriteId == productId) {
         favorites.removeWhere((element) => element == productId);
         await Globals.sharedPreferences.setStringList(PRODUCT_FAVORITES, favorites);
-        emit(FavoritesChanged());
+        emit(ProductOnCategoryFavoritesChanged());
         return true;
       }
     }
     favorites.add(productId);
     await Globals.sharedPreferences.setStringList(PRODUCT_FAVORITES, favorites);
-    emit(FavoritesChanged());
+    emit(ProductOnCategoryFavoritesChanged());
     return true;
   }
 }

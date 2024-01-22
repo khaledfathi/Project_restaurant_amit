@@ -19,7 +19,7 @@ class ShopScreen extends StatefulWidget {
 
 class _ShopScreenState extends State<ShopScreen> {
   //screen controller
-  ShopController _controller = ShopController();
+  final ShopController _controller = ShopController();
 
   @override
   Widget build(BuildContext context) {

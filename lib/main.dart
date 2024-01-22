@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_restaurant/core/core_export.dart';
 import 'package:project_restaurant/core/services/auth/auth.dart';
-import 'package:project_restaurant/src/controllers/favorites/cubit/favorites_ui_cubit.dart';
 import 'package:project_restaurant/src/controllers/internet_checker/cubit/internet_cubit.dart';
-import 'package:project_restaurant/src/controllers/products_on_category/cubit/favorites_cubit.dart';
+import 'package:project_restaurant/src/controllers/products_on_category/cubit/add_remove_favorites/product_on_category_favorites_cubit.dart';
 import 'package:project_restaurant/src/models/user_model.dart';
 import 'package:project_restaurant/src/views/login/login_screen.dart';
 import 'package:project_restaurant/src/views/main/main_screen.dart';
@@ -24,7 +23,7 @@ class App extends StatelessWidget {
           BlocProvider(
             create: (context) => InternetCubit(),
           ),
-          BlocProvider(create: (context)=> FavoritesCubit()),
+          BlocProvider(create: (context)=> ProductOnCategoryFavoritesCubit()),
         ],
         child: BlocConsumer<InternetCubit , InternetState>(
             builder: (context, state) {

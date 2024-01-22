@@ -90,6 +90,7 @@ class FavoritesProductBox extends StatelessWidget {
             ],
           ),
         ),
+        //remove from favorite
         Positioned(
             top: 10,
             right: 10,
@@ -101,17 +102,23 @@ class FavoritesProductBox extends StatelessWidget {
                 color: Colors.grey,
               ),
             )),
+        // add to cart
         Positioned(
             bottom: 10,
             right: 10,
             child: InkWell(
-              onTap: onTapAddToCart,
-              child: const Icon(
-                Icons.shopping_bag_rounded,
-                size: 30,
-                color: Colors.red,
-              ),
-            ))
+                onTap: onTapAddToCart,
+                child: const SizedBox(
+                    width: 36,
+                    height: 36,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.red,
+                      child: Icon(
+                        Icons.shopping_bag_rounded,
+                        size: 24,
+                        color: Colors.white,
+                      ),
+                    ))))
       ],
     );
   }

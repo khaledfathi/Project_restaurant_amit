@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_restaurant/core/custom_widgets/blocks/custom_lodaing.dart';
 import 'package:project_restaurant/core/custom_widgets/blocks/custom_no_internet.dart';
-import 'package:project_restaurant/src/controllers/favorites/cubit/favorites_ui_cubit.dart';
+import 'package:project_restaurant/src/controllers/favorites/cubit/favorites_remove_cubit.dart';
 import 'package:project_restaurant/src/controllers/favorites/favorites_controller.dart';
 import 'package:project_restaurant/src/controllers/internet_checker/cubit/internet_cubit.dart';
 import 'package:project_restaurant/src/models/product_model.dart';
@@ -26,7 +26,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => FavoritesUiCubit(),
+        create: (context) => FavoritesRemoveCubit(),
         child: Scaffold(
           appBar: AppBar(
             title: const Text("Favorites"),
@@ -43,30 +43,13 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           _favoriteProducts = snapshot.data!;
-                          return BlocConsumer<FavoritesUiCubit,
-                                  FavoritesUiState>(
+                          return BlocConsumer<FavoritesRemoveCubit,
+                                  FavoritesRemoveState>(
                               builder: (context, state) {
                                 return ListView(
                                   children:
                                       _productsBoxs(context, _favoriteProducts),
                                 );
-                                // return ListView.builder(
-                                //   itemCount: favoriteProducts.length,
-                                //   itemBuilder: (context, index) {
-                                //     return FavoritesProductBox(
-                                //       image: favoriteProducts[index].image!,
-                                //       name: favoriteProducts[index].name!,
-                                //       restaurantName: favoriteProducts[index].restaurantName!,
-                                //       discount: favoriteProducts[index].discount!,
-                                //       price: favoriteProducts[index].price!,
-                                //       onTapAddToCart: () {},
-                                //       onTapRemoveItem: () {
-                                //         FavoritesUiCubit.get(context).removeFromFavorites( favoriteProducts[index].id!.toString());
-                                //         print(state);
-                                //       },
-                                //     );
-                                //   },
-                                // );
                               },
                               listener: (context, state) {});
                         } else {
@@ -86,7 +69,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
       BuildContext context, List<ProductModel> products) {
     List<Widget> producstList = [];
     products.asMap().forEach((index, product) {
-      producstList.add(BlocConsumer<FavoritesUiCubit, FavoritesUiState>(
+      producstList.add(BlocConsumer<FavoritesRemoveCubit, FavoritesRemoveState>(
         listener: (context, state) {},
         builder: (context, state) {
           return FavoritesProductBox(
@@ -98,7 +81,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
             onTapAddToCart: () {},
             onTapRemoveItem: () async {
               _favoriteProducts.removeAt(index);
-              FavoritesUiCubit.get(context)
+              FavoritesRemoveCubit.get(context)
                   .removeFromFavorites(product.id!.toString());
             },
           );

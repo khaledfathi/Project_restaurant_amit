@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_restaurant/core/core_export.dart';
 import 'package:project_restaurant/core/custom_widgets/blocks/custom_lodaing.dart';
-import 'package:project_restaurant/src/controllers/products_on_category/cubit/favorites_cubit.dart';
+import 'package:project_restaurant/src/controllers/products_on_category/cubit/add_remove_favorites/product_on_category_favorites_cubit.dart';
 import 'package:project_restaurant/src/controllers/products_on_category/product_on_category_controller.dart';
 import 'package:project_restaurant/src/controllers/products_on_category/products_on_category_args.dart';
 import 'package:project_restaurant/src/models/product_model.dart';
@@ -50,7 +50,7 @@ class _ProductsOnCategoryStateScreen extends State<ProductsOnCategoryScreen> {
                             mainAxisSpacing: 15,
                             crossAxisCount: 2),
                     itemBuilder: (context, index) {
-                      return BlocConsumer<FavoritesCubit, FavoritesState>(
+                      return BlocConsumer<ProductOnCategoryFavoritesCubit, ProductOnCategoryFavoritesState>(
                         listener: (context, state) {},
                         builder: (context, state) {
                           return ProductsProductBox(
@@ -62,7 +62,7 @@ class _ProductsOnCategoryStateScreen extends State<ProductsOnCategoryScreen> {
                               favoriteIcon: _setFavoriteIcon(
                                   products[index].id!.toString()),
                               onTapFavorite: () {
-                                FavoritesCubit.get(context).favoritesAction(
+                                ProductOnCategoryFavoritesCubit.get(context).favoritesAction(
                                     products[index].id!.toString());
                               });
                         },
