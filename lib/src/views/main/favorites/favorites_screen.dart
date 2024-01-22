@@ -46,10 +46,17 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                           return BlocConsumer<FavoritesRemoveCubit,
                                   FavoritesRemoveState>(
                               builder: (context, state) {
+
+                                /***** Favorites Product or Nothing*****/
+                                if (_favoriteProducts.isEmpty){
+                                  return const Center(child: Text('You have no Favoites'),);
+                                }
                                 return ListView(
                                   children:
                                       _productsBoxs(context, _favoriteProducts),
                                 );
+                                /***** -END- Favorites Product or Nothing*****/
+
                               },
                               listener: (context, state) {});
                         } else {
