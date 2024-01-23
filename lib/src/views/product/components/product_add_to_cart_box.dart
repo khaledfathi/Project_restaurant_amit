@@ -1,11 +1,16 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:project_restaurant/core/custom_widgets/buttons/custom_standard_button.dart';
 
 class ProductAddToCartBox extends StatelessWidget {
-  final void Function()? onPressAddToCart;
+  final int cartInitValue ; 
+  final void Function() onPressAddToCart;
+  final void Function(int quantity) onChange;
   const ProductAddToCartBox({super.key, 
-    this.onPressAddToCart,
+    this.cartInitValue = 1,
+    required this.onPressAddToCart,
+    required this.onChange,
   });
 
   @override
@@ -30,7 +35,8 @@ class ProductAddToCartBox extends StatelessWidget {
                 child: 
                 Padding(padding: const EdgeInsets.all(20) ,
                  child: SpinBox(
-                  value: 1,
+                  value: cartInitValue.toDouble(),
+                  onChanged: (value)=> onChange(value.toInt()),
                   min: 1,   
                   readOnly: true,
                   textStyle: const TextStyle(fontSize: 18),

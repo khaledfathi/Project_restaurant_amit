@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:project_restaurant/core/custom_widgets/blocks/custom_list_of_stars.dart';
 
 class FavoritesProductBox extends StatelessWidget {
   final String image;
@@ -33,7 +34,7 @@ class FavoritesProductBox extends StatelessWidget {
           ),
           child: Row(
             children: [
-              // Product Image
+              /***** Product Image ******/
               SizedBox(
                   width: 104,
                   height: double.infinity,
@@ -54,10 +55,12 @@ class FavoritesProductBox extends StatelessWidget {
                     },
                     width: 50,
                   )),
-              //Prodcut details coulmn
+              /***** -END- Product Image ******/
+
+              /***** Prodcut details coulmn ******/
               Expanded(
                   child: Container(
-                      padding: const EdgeInsets.only(left:10),
+                      padding: const EdgeInsets.only(left: 10),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,22 +80,22 @@ class FavoritesProductBox extends StatelessWidget {
                               Expanded(
                                 flex: 1,
                                 child: Text('$price\$',
-                                    style: const TextStyle(fontSize: 14 , fontWeight: FontWeight.bold)),
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold)),
                               ),
-                              Expanded(
-                                  flex: 2,
-                                  child: Row(children: [
-                                ..._listOfStars(),
-                                const Text(' (10)'),
-                              ])),
+                              const Expanded(
+                                  flex: 2, child: CustomListOfStars()),
                             ],
                           )
                         ],
                       ))),
+              /***** -END- Prodcut details coulmn ******/
             ],
           ),
         ),
-        //remove from favorite
+
+        /***** Remove From Favorites X button ******/
         Positioned(
             top: 10,
             right: 10,
@@ -104,7 +107,9 @@ class FavoritesProductBox extends StatelessWidget {
                 color: Colors.grey,
               ),
             )),
-        // add to cart
+        /***** -END- Remove From Favorites X button ******/
+
+        /***** Add to cart icon ******/
         Positioned(
             bottom: 10,
             right: 10,
@@ -121,19 +126,8 @@ class FavoritesProductBox extends StatelessWidget {
                         color: Colors.white,
                       ),
                     ))))
+        /***** -END- Add to cart icon ******/
       ],
     );
-  }
-
-  List<Widget> _listOfStars({int count = 5}) {
-    List<Widget> stars = [];
-    for (var i = 0; i < count; i++) {
-      stars.add(const Icon(
-        Icons.star,
-        color: Colors.yellow,
-        size: 14,
-      ));
-    }
-    return stars;
   }
 }

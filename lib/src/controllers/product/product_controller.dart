@@ -1,13 +1,38 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:project_restaurant/core/core_export.dart';
+import 'package:project_restaurant/src/views/products_on_category/products_on_category_screen.dart';
 
 class ProductController {
-  bool isInFavorite (String productId){
-    List<String>? favoritesProducts =  Globals.sharedPreferences.getStringList(PRODUCT_FAVORITES);
+  /// check if this productId in list of shared preferences [PRODUCT_FAVORITES]
+  bool isInFavorite(String productId) {
+    List<String>? favoritesProducts =
+        Globals.sharedPreferences.getStringList(PRODUCT_FAVORITES);
     for (var favoriteProductId in favoritesProducts!) {
-      if (favoriteProductId == productId){
-        return true ; 
+      if (favoriteProductId == productId) {
+        return true;
       }
-    } 
-    return false; 
+    }
+    return false;
+  }
+
+  /// add map {productId , quantity} to list on shared preferences [CART]
+  Future<void> addToCart(BuildContext context, String productId, int quantity) async {
+    Map <String , String> data = {'productId':productId , 'quantity':quantity.toString()};
+
+    //get old CART List 
+    List<String>? cart = Globals.sharedPreferences.getStringList(CART);
+    //add new to cart 
+    if (cart == null) {
+      await Globals.sharedPreferences.setStringList(CART, [jsonEncode(data)]).then(
+          (value) => Navigator.popUntil(
+              context, ModalRoute.withName(ProductsOnCategoryScreen.route)));
+    } else {
+      cart.add(jsonEncode(data));
+      await Globals.sharedPreferences.setStringList(CART, cart).then((value) =>
+          Navigator.popUntil(
+              context, ModalRoute.withName(ProductsOnCategoryScreen.route)));
+    }
   }
 }

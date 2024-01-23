@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project_restaurant/core/core_export.dart';
 import 'package:project_restaurant/core/custom_widgets/blocks/custom_lodaing.dart';
 import 'package:project_restaurant/core/states/favorites/product_on_category_favorites/product_on_category_favorites_cubit.dart';
 import 'package:project_restaurant/src/controllers/product/product_args.dart';
@@ -56,6 +55,7 @@ class _ProductsOnCategoryStateScreen extends State<ProductsOnCategoryScreen> {
                           ProductOnCategoryFavoritesState>(
                         listener: (context, state) {},
                         builder: (context, state) {
+                          /***** Product data box ******/
                           return ProductsProductBox(
                               image: products[index].image!,
                               name: products[index].name!,
@@ -72,6 +72,7 @@ class _ProductsOnCategoryStateScreen extends State<ProductsOnCategoryScreen> {
                                   ProductOnCategoryFavoritesCubit.get(context)
                                       .favoritesAction(
                                           products[index].id!.toString()));
+                          /***** -END- Product data box ******/
                         },
                       );
                     },
@@ -85,20 +86,11 @@ class _ProductsOnCategoryStateScreen extends State<ProductsOnCategoryScreen> {
   }
 
   /// check if product in favorites
-  bool _isInFavorite(String productId) {
-    List<String>? favorites =
-        Globals.sharedPreferences.getStringList(PRODUCT_FAVORITES);
-    if (favorites != null) {
-      for (var favoriteId in favorites) {
-        if (favoriteId == productId) return true;
-      }
-    }
-    return false;
-  }
+  
 
   ///set favorite icon
   Icon? _setFavoriteIcon(String productId) {
-    return _isInFavorite(productId)
+    return _controller.isInFavorite(productId)
         ? const Icon(Icons.favorite, color: Colors.red)
         : null;
   }

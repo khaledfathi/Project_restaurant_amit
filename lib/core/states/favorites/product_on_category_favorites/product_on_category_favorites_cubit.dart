@@ -15,11 +15,6 @@ class ProductOnCategoryFavoritesCubit extends Cubit<ProductOnCategoryFavoritesSt
     List<String>? favorites =
         Globals.sharedPreferences.getStringList(PRODUCT_FAVORITES);
 
-    // if it's first time to use favorites
-    if (favorites == null) {
-      await Globals.sharedPreferences.setStringList(PRODUCT_FAVORITES, []);
-      favorites = Globals.sharedPreferences.getStringList(PRODUCT_FAVORITES);
-    }
     //check action
     for (var inFavoriteId in favorites!) {
       if (inFavoriteId == productId) {

@@ -74,7 +74,7 @@ class SignUpScreenForm extends StatelessWidget {
               ),
               /***** -END- Email Input *****/ 
               
-              /***** Password *****/ 
+              /***** Password Input *****/ 
               BlocConsumer<SignUpPasswordVisibilityCubit, SignUpPasswordVisibilityState>(
                 listener: (context, state) {},
                 builder: (context, state) {

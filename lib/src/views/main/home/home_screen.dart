@@ -79,6 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> _listOfRestaurantsOnCategory(List<List<RestaurantModel>> data) {
     List<Widget> restaurants = [];
     for (var elements in data) {
+      /***** Restaurants category row *****/
       restaurants.add(HomeRestaurantsInCategoryRow(
         restaurantCategoryName: elements[0].categoryName,
         onTapViewAll: () => print("OK"),
@@ -86,6 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
           scrollDirection: Axis.horizontal,
           itemCount: elements.length,
           itemBuilder: (context, index) {
+            /***** Restaurn box *****/
             return HomeRestaurantBox(
               restaurantName: elements[index].name,
               image: Image.network(
@@ -105,9 +107,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 170,
               ),
             );
+            /***** -END- Restaurn box *****/
           },
         ),
       ));
+      /***** -END- Restaurants category row *****/
     }
     return restaurants;
   }

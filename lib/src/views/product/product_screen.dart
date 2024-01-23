@@ -8,7 +8,6 @@ import 'package:project_restaurant/src/controllers/product/product_args.dart';
 import 'package:project_restaurant/src/controllers/product/product_controller.dart';
 import 'package:project_restaurant/src/models/product_model.dart';
 import 'package:project_restaurant/src/views/product/components/product_add_to_cart_box.dart';
-import 'package:project_restaurant/src/views/products_on_category/products_on_category_screen.dart';
 
 class ProductScreen extends StatefulWidget {
   static const String route = 'product';
@@ -21,6 +20,8 @@ class ProductScreen extends StatefulWidget {
 class _ProductScreenState extends State<ProductScreen> {
   //screen controller
   final ProductController _controller = ProductController();
+  //values 
+  int cartQuantity = 1; 
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +147,8 @@ class _ProductScreenState extends State<ProductScreen> {
                               topRight: Radius.circular(20)),
                         ),
                         child:  ProductAddToCartBox(
-                          onPressAddToCart: ()=> Navigator.popUntil(context, ModalRoute.withName( ProductsOnCategoryScreen.route)),
+                          onChange: (quantity) => cartQuantity = quantity,
+                          onPressAddToCart: ()=> _controller.addToCart(context, product.id.toString(), cartQuantity)
                         ),
                       ),
                     );
