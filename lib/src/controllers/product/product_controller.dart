@@ -18,9 +18,8 @@ class ProductController {
   }
 
   /// add map {productId , quantity} to list on shared preferences [CART]
-  Future<void> addToCart(BuildContext context, String productId, int quantity) async {
-    Map <String , String> data = {'productId':productId , 'quantity':quantity.toString()};
-
+  Future<void> addToCart(BuildContext context, String productId, int quantity , productPrice) async {
+    Map <String , String> data = {'productId':productId , 'quantity':quantity.toString() , 'productPrice': productPrice};
     //get old CART List 
     List<String>? cart = Globals.sharedPreferences.getStringList(CART);
     //add new to cart 

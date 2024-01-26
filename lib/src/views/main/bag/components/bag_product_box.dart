@@ -9,13 +9,15 @@ class BagProductBox extends StatelessWidget {
   final String quantity; 
   final String price; 
   final void Function()? onTapRemoveFromBag; 
+  final void Function(double quantity)? onQuanityChange; 
   const BagProductBox({super.key,
     required this.image,
     required this.productName, 
     required this.restaurantName, 
     required this.quantity,
     required this.price,
-    required this.onTapRemoveFromBag 
+    this.onTapRemoveFromBag ,
+    this.onQuanityChange,
   });
 
   @override
@@ -74,6 +76,7 @@ class BagProductBox extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(5),
                         child: SpinBox(
+                          onChanged: onQuanityChange,
                           value: double.parse(quantity),
                           readOnly: true,
                           min: 1,
@@ -96,7 +99,7 @@ class BagProductBox extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                          onPressed: () {}, icon: const Icon(Icons.close)),
+                          onPressed: onTapRemoveFromBag ,  icon: const Icon(Icons.close)),
                       Padding(
                         padding: const EdgeInsets.all(10),
                         child: Text(

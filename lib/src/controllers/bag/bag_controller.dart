@@ -35,7 +35,8 @@ class BagController {
         'restaurantName': product['restaurant_name'],
         'productName': product['name'],
         'image': product['image'],
-        'price': (double.parse(product['price'])  * double.parse (data['quantity'])).toStringAsFixed(2),
+        'totalPrice': (double.parse(product['price'])  * double.parse (data['quantity'])).toStringAsFixed(2),
+        'price': product['price'],
         'discount': product['discount'],
       });
     }

@@ -1,4 +1,5 @@
 class UserModel {
+  String? id ;
   String? name ;
   String? email ;
   String? image ; 
@@ -6,6 +7,7 @@ class UserModel {
   UserModel ({this.name , this.email, this.image , this.token}); 
   
   UserModel.fromMap (Map userFields){
+    id = userFields['id'];
     name = userFields['name'];
     email = userFields['email'];
     image = userFields['image']; 
