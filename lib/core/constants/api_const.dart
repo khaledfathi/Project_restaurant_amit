@@ -30,3 +30,9 @@ const API_GET_PRODUCT_CATEGORIES= '$API_BASE_URL/api/product-category';
 const API_GET_PRODUCT_FILTER_BY_CATEGROY= '$API_BASE_URL/api/product/filter-by-category'; 
 const API_GET_PRODUCT_BY_ID= '$API_BASE_URL/api/product'; 
 /***** -END- URIs Products *****/
+
+
+
+/***** URIs Orders *****/
+const API_POST_ORDER = '$API_BASE_URL/api/order'; 
+/***** -END- URIs Orders *****/

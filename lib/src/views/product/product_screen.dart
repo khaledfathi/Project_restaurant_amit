@@ -148,7 +148,7 @@ class _ProductScreenState extends State<ProductScreen> {
                         ),
                         child:  ProductAddToCartBox(
                           onChange: (quantity) => cartQuantity = quantity,
-                          onPressAddToCart: ()=> _controller.addToCart(context, product.id.toString(), cartQuantity , product.price)
+                          onPressAddToCart: ()=> _controller.addToCart(context, product.id.toString(), cartQuantity.toString() , product.price.toString(), product.discount.toString())
                         ),
                       ),
                     );

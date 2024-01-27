@@ -18,15 +18,23 @@ class ProductController {
   }
 
   /// add map {productId , quantity} to list on shared preferences [CART]
-  Future<void> addToCart(BuildContext context, String productId, int quantity , productPrice) async {
-    Map <String , String> data = {'productId':productId , 'quantity':quantity.toString() , 'productPrice': productPrice};
-    //get old CART List 
+  Future<void> addToCart(BuildContext context, String productId,
+      String quantity, String productPrice, String discount) async {
+    Map<String, String> data = {
+      'productId': productId,
+      'quantity': quantity.toString(),
+      'price': double.parse(productPrice).toString(),
+      'totalPrice': ((double.parse(productPrice) - double.parse(discount)) * double.parse(quantity)) .toString(),
+      'discount': discount.toString()
+    };
+    //get old CART List
     List<String>? cart = Globals.sharedPreferences.getStringList(CART);
-    //add new to cart 
+    //add new to cart
     if (cart == null) {
-      await Globals.sharedPreferences.setStringList(CART, [jsonEncode(data)]).then(
-          (value) => Navigator.popUntil(
-              context, ModalRoute.withName(ProductsOnCategoryScreen.route)));
+      await Globals.sharedPreferences
+          .setStringList(CART, [jsonEncode(data)]).then((value) =>
+              Navigator.popUntil(context,
+                  ModalRoute.withName(ProductsOnCategoryScreen.route)));
     } else {
       cart.add(jsonEncode(data));
       await Globals.sharedPreferences.setStringList(CART, cart).then((value) =>

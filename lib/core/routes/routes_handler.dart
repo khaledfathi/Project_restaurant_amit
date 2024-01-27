@@ -12,6 +12,7 @@ import 'package:project_restaurant/src/views/product/product_screen.dart';
 import 'package:project_restaurant/src/views/products_on_category/products_on_category_screen.dart';
 import 'package:project_restaurant/src/views/products_on_restaurant/products_on_restaurant_screen.dart';
 import 'package:project_restaurant/src/views/sign_up/sign_up_screen.dart';
+import 'package:project_restaurant/src/views/success/success_screen.dart';
 
 class RouteHandler {
    static Route<dynamic> generateRoutes (RouteSettings setting){
@@ -31,6 +32,7 @@ class RouteHandler {
       case ProductsOnCategoryScreen.route : return MaterialPageRoute(builder: (context)=> const ProductsOnCategoryScreen(), settings:setting);
       case ProductsOnRestaurantScreen.route : return MaterialPageRoute(builder: (context)=> const ProductsOnRestaurantScreen(), settings:setting);
       case ProductScreen.route : return MaterialPageRoute(builder: (context)=> const ProductScreen(), settings:setting);
+      case SuccessScreen.route : return MaterialPageRoute(builder: (context)=> const SuccessScreen(), settings:setting);
 
       default : return MaterialPageRoute(builder: (_)=>const PageNotFound() , settings: setting); 
     }    

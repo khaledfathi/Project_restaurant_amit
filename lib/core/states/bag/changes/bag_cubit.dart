@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:project_restaurant/core/core_export.dart';
-import 'package:project_restaurant/core/services/auth/auth.dart';
 
 part 'bag_state.dart';
 
@@ -26,7 +25,7 @@ class BagCubit extends Cubit<BagState> {
     double overAllPrice = 0;
     for (var element in cart) {
       Map data = jsonDecode(element);
-      overAllPrice += double.parse(data['productPrice']) * int.parse(data['quantity']);
+      overAllPrice += (double.parse(data['totalPrice'])) * int.parse(data['quantity']);
     }
     return overAllPrice;
   }
@@ -49,21 +48,12 @@ class BagCubit extends Cubit<BagState> {
 
     emit(BagChanged());
     //recalculate over all price
-    cart = await Globals.sharedPreferences.getStringList(CART) ?? [];
+    cart =  Globals.sharedPreferences.getStringList(CART) ?? [];
     double overAllPrice = 0;
     for (var element in cart) {
       Map data = jsonDecode(element);
-      overAllPrice +=
-          double.parse(data['productPrice']) * int.parse(data['quantity']);
+      overAllPrice += double.parse(data['totalPrice']) * double.parse(data['quantity']) ;
     }
     return overAllPrice;
-  }
-
-  void makeOrder (){
-    List cart = Globals.sharedPreferences.getStringList(CART) ?? [] ; 
-    Map orders = {'user_id': Auth.currentUser!.id , 'products':[]};
-    for (var product in cart) {
-      orders['products'].add( product);
-    }
   }
 }
