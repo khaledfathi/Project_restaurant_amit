@@ -4,8 +4,8 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:project_restaurant/core/core_export.dart';
 import 'package:project_restaurant/core/custom_widgets/blocks/custom_lodaing.dart';
 import 'package:project_restaurant/core/custom_widgets/blocks/custom_no_internet.dart';
+import 'package:project_restaurant/core/states/internet_checker/internet/internet_cubit.dart';
 import 'package:project_restaurant/src/controllers/home/home_controller.dart';
-import 'package:project_restaurant/src/controllers/internet_checker/cubit/internet_cubit.dart';
 import 'package:project_restaurant/src/models/restaurant_model.dart';
 import 'package:project_restaurant/src/views/main/home/components/home_restaurant_box.dart';
 import 'package:project_restaurant/src/views/main/home/components/home_restaurants_on_category_row.dart';
@@ -79,6 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> _listOfRestaurantsOnCategory(List<List<RestaurantModel>> data) {
     List<Widget> restaurants = [];
     for (var elements in data) {
+      /***** Restaurants category row *****/
       restaurants.add(HomeRestaurantsInCategoryRow(
         restaurantCategoryName: elements[0].categoryName,
         onTapViewAll: () => print("OK"),
@@ -86,6 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
           scrollDirection: Axis.horizontal,
           itemCount: elements.length,
           itemBuilder: (context, index) {
+            /***** Restaurn box *****/
             return HomeRestaurantBox(
               restaurantName: elements[index].name,
               image: Image.network(
@@ -105,9 +107,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 170,
               ),
             );
+            /***** -END- Restaurn box *****/
           },
         ),
       ));
+      /***** -END- Restaurants category row *****/
     }
     return restaurants;
   }

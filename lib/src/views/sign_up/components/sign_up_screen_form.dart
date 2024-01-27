@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_restaurant/core/core_export.dart';
-import 'package:project_restaurant/src/controllers/signup/cubit/UI/sign_up_email_validation/sign_up_email_validation_cubit.dart';
-import 'package:project_restaurant/src/controllers/signup/cubit/UI/sign_up_name_validation/sign_up_name_validation_cubit.dart';
-import 'package:project_restaurant/src/controllers/signup/cubit/UI/sign_up_password_visibility/sign_up_password_visibility_cubit.dart';
+import 'package:project_restaurant/core/states/signup/sign_up_email_validation/sign_up_email_validation_cubit.dart';
+import 'package:project_restaurant/core/states/signup/ui_validation/sign_up_name_validation/sign_up_name_validation_cubit.dart';
+import 'package:project_restaurant/core/states/signup/ui_validation/sign_up_password_visibility/sign_up_password_visibility_cubit.dart';
 import 'package:project_restaurant/src/views/login/login_screen.dart';
 
 class SignUpScreenForm extends StatelessWidget {
@@ -74,7 +74,7 @@ class SignUpScreenForm extends StatelessWidget {
               ),
               /***** -END- Email Input *****/ 
               
-              /***** Password *****/ 
+              /***** Password Input *****/ 
               BlocConsumer<SignUpPasswordVisibilityCubit, SignUpPasswordVisibilityState>(
                 listener: (context, state) {},
                 builder: (context, state) {

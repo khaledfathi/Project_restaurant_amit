@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_restaurant/core/custom_widgets/blocks/custom_social_media_block.dart';
 import 'package:project_restaurant/core/custom_widgets/headers/custom_header_text.dart';
-import 'package:project_restaurant/src/controllers/login/cubit/login/login_cubit.dart';
+import 'package:project_restaurant/core/states/login/login/login_cubit.dart';
 import 'package:project_restaurant/src/controllers/login/login_args.dart';
 import 'package:project_restaurant/src/views/login/components/login_apb_bar.dart';
 import 'package:project_restaurant/src/views/login/components/login_form.dart';

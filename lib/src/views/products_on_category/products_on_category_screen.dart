@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project_restaurant/core/core_export.dart';
 import 'package:project_restaurant/core/custom_widgets/blocks/custom_lodaing.dart';
-import 'package:project_restaurant/src/controllers/products_on_category/cubit/favorites_cubit.dart';
+import 'package:project_restaurant/core/states/favorites/product_on_category_favorites/product_on_category_favorites_cubit.dart';
+import 'package:project_restaurant/src/controllers/product/product_args.dart';
 import 'package:project_restaurant/src/controllers/products_on_category/product_on_category_controller.dart';
 import 'package:project_restaurant/src/controllers/products_on_category/products_on_category_args.dart';
 import 'package:project_restaurant/src/models/product_model.dart';
+import 'package:project_restaurant/src/views/product/product_screen.dart';
 import 'package:project_restaurant/src/views/products_on_category/components/products_product_box.dart';
 
 class ProductsOnCategoryScreen extends StatefulWidget {
@@ -50,9 +51,11 @@ class _ProductsOnCategoryStateScreen extends State<ProductsOnCategoryScreen> {
                             mainAxisSpacing: 15,
                             crossAxisCount: 2),
                     itemBuilder: (context, index) {
-                      return BlocConsumer<FavoritesCubit, FavoritesState>(
+                      return BlocConsumer<ProductOnCategoryFavoritesCubit,
+                          ProductOnCategoryFavoritesState>(
                         listener: (context, state) {},
                         builder: (context, state) {
+                          /***** Product data box ******/
                           return ProductsProductBox(
                               image: products[index].image!,
                               name: products[index].name!,
@@ -61,10 +64,15 @@ class _ProductsOnCategoryStateScreen extends State<ProductsOnCategoryScreen> {
                               price: products[index].price!,
                               favoriteIcon: _setFavoriteIcon(
                                   products[index].id!.toString()),
-                              onTapFavorite: () {
-                                FavoritesCubit.get(context).favoritesAction(
-                                    products[index].id!.toString());
-                              });
+                              onTapProductImage: () => Navigator.of(context)
+                                  .pushNamed(ProductScreen.route,
+                                      arguments: ProductArgs(
+                                          product: products[index])),
+                              onTapFavorite: () =>
+                                  ProductOnCategoryFavoritesCubit.get(context)
+                                      .favoritesAction(
+                                          products[index].id!.toString()));
+                          /***** -END- Product data box ******/
                         },
                       );
                     },
@@ -78,20 +86,11 @@ class _ProductsOnCategoryStateScreen extends State<ProductsOnCategoryScreen> {
   }
 
   /// check if product in favorites
-  bool _isInFavorite(String productId) {
-    List<String>? favorites =
-        Globals.sharedPreferences.getStringList(PRODUCT_FAVORITES);
-    if (favorites != null) {
-      for (var favoriteId in favorites) {
-        if (favoriteId == productId) return true;
-      }
-    }
-    return false;
-  }
+  
 
   ///set favorite icon
   Icon? _setFavoriteIcon(String productId) {
-    return _isInFavorite(productId)
+    return _controller.isInFavorite(productId)
         ? const Icon(Icons.favorite, color: Colors.red)
         : null;
   }

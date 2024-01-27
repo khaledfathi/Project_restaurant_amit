@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../core_export.dart';
 
 class AppConfig {
-  //apply config
+  ///apply config
   Future<void> apply() async {
     _initFlutter();
     await _initAppPath();
@@ -18,13 +18,13 @@ class AppConfig {
     _initDio();
   }
 
-  //flutter required
+  ///flutter required
   void _initFlutter() {
     WidgetsFlutterBinding.ensureInitialized();
     debugPrint('AppConfig : Flutter ensureInitialized [OK]');
   }
 
-  //get device application apth
+  ///get device application apth
   Future<void> _initAppPath() async {
     await getApplicationDocumentsDirectory()
         .then((direcrory) => Globals.appDirPath = direcrory.path);
@@ -45,22 +45,31 @@ class AppConfig {
     Globals.sharedPreferences.getBool(IS_LOGIN) == null
         ? Globals.sharedPreferences.setBool(IS_LOGIN, false)
         : null;
-  }
+    //prepeare Cart 
+    Globals.sharedPreferences.getStringList(CART) == null
+        ? Globals.sharedPreferences.setStringList(CART, [])
+        : null;
+  //prepeare Favorites
+    Globals.sharedPreferences.getStringList(PRODUCT_FAVORITES) == null
+        ? Globals.sharedPreferences.setStringList(PRODUCT_FAVORITES, [])
+        : null;
+}
 
-  //init DIO
+  ///init DIO
   void _initDio() {
     Globals.api = Dio();
     debugPrint('AppConfig : Dio (http communications) initilaizing  [OK]');
   }
 
-  //set device orientations
+  ///set device orientations
   Future<void> _initOrientationsProtraitUp() async {
     await SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
     debugPrint('AppConfig : Device orientation set to Portrait up  [OK]');
   }
-
+  
+  ///internet connection 
   void _initConnection() {
     Globals.connection = InternetConnection();
     debugPrint('AppConfig : InternetConnection Instansation [OK] ');

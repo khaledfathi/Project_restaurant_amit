@@ -22,6 +22,7 @@ dependencies:
   internet_connection_checker_plus: ^2.1.0
   flutter_svg_provider: ^1.0.7
   loading_animation_widget: ^1.2.0+4
+  flutter_spinbox: ^0.13.1
 
 dev_dependencies:
   flutter_test:

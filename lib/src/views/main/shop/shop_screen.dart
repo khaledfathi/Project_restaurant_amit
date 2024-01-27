@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_restaurant/core/custom_widgets/blocks/custom_lodaing.dart';
 import 'package:project_restaurant/core/custom_widgets/blocks/custom_no_internet.dart';
-import 'package:project_restaurant/src/controllers/internet_checker/cubit/internet_cubit.dart';
+import 'package:project_restaurant/core/states/internet_checker/internet/internet_cubit.dart';
 import 'package:project_restaurant/src/controllers/shop/shop_controller.dart';
 import 'package:project_restaurant/src/models/product_category_model.dart';
 import 'package:project_restaurant/src/views/main/shop/components/shop_products_categories_box.dart';
@@ -19,7 +19,7 @@ class ShopScreen extends StatefulWidget {
 
 class _ShopScreenState extends State<ShopScreen> {
   //screen controller
-  ShopController _controller = ShopController();
+  final ShopController _controller = ShopController();
 
   @override
   Widget build(BuildContext context) {
